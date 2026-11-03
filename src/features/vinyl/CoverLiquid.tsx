@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useId, useRef, useState, type PointerEvent, type RefObject } from 'react'
+import { useCallback, useEffect, useRef, useState, type PointerEvent, type RefObject } from 'react'
 import { animate, motion, useAnimationFrame, useMotionValue, useSpring, useTransform, type MotionValue } from 'motion/react'
+import { EASE_IN_OUT } from '../../shared/motion'
+import { useSvgId } from '../../shared/hooks/useSvgId'
 
 // Lead hover blob radius as a fraction of the frame.
 const SPOT = 0.11
@@ -33,7 +35,6 @@ const POOL = 0.9
 const PADDING = 0.07
 // Max ripple (px) the cover gets while the hover blob moves fast.
 const REFRACTION = 18
-const easeInOut = [0.65, 0, 0.35, 1] as const
 // Seconds a revealed cover takes to clear when switching release (the discs slide for 0.7s).
 const SWITCH_FADE = 0.25
 // Reveal pour timing: long, decelerating tail so it lands softly.
@@ -163,7 +164,7 @@ interface CoverLiquidProps {
  * revealing the cover or, when it's shown, cutting through it to the vinyl.
  */
 export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const id = useSvgId()
   const gooId = `liquid-${id}`
   const refractId = `refract-${id}`
   const maskId = `liquid-mask-${id}`
@@ -239,7 +240,7 @@ export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
       showInfo ? 1 : 0,
       showInfo ? { duration: 2.2, ease: pourOut } : { duration: 1.4, ease: 'linear' },
     )
-    const b = animate(coverAlpha, showInfo ? 1 : 0, { duration: 0.7, ease: easeInOut })
+    const b = animate(coverAlpha, showInfo ? 1 : 0, { duration: 0.7, ease: EASE_IN_OUT })
 
     // Splash as the cover pours in (white drops) or starts draining (holes punched through it).
     if (mounted.current) {
@@ -261,7 +262,7 @@ export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
     if (!heldSrc) return
     const fade = animate(switchFade, 0, {
       duration: SWITCH_FADE,
-      ease: easeInOut,
+      ease: EASE_IN_OUT,
       onComplete: () => {
         pour.jump(0)
         coverAlpha.jump(0)
@@ -480,7 +481,7 @@ export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
           if (e.pointerType !== 'mouse') return
           moveTo(e)
           hovering.current = false
-          animate(hoverRadius, 0, { duration: 0.8, ease: easeInOut })
+          animate(hoverRadius, 0, { duration: 0.8, ease: EASE_IN_OUT })
         }}
       />
     </>

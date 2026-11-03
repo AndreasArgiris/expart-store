@@ -5,8 +5,8 @@ import { HeroVideoReveal } from './HeroVideoReveal'
 import { Parallax } from '../../shared/components/Parallax'
 import { formatEventDate, nextEvent } from '../events/events'
 import { pageHref } from '../../shared/hooks/usePage'
+import { EASE_OUT, rise } from '../../shared/motion'
 
-const ease = [0.22, 1, 0.36, 1] as const
 
 // Each frame corner slides in from its own diagonal.
 const corners = [
@@ -15,12 +15,6 @@ const corners = [
   { className: 'fc fc-bl', from: { x: -14, y: 14 } },
   { className: 'fc fc-br', from: { x: 14, y: 14 } },
 ]
-
-const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease },
-})
 
 export function HomePage() {
   const next = nextEvent()
@@ -39,7 +33,7 @@ export function HomePage() {
                 className={c.className}
                 initial={{ opacity: 0, ...c.from }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.15, ease }}
+                transition={{ duration: 0.9, delay: 0.15, ease: EASE_OUT }}
               />
             ))}
             <motion.img
@@ -49,7 +43,7 @@ export function HomePage() {
               draggable={false}
               initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.1, delay: 0.3, ease }}
+              transition={{ duration: 1.1, delay: 0.3, ease: EASE_OUT }}
             />
           </div>
         </main>

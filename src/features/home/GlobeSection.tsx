@@ -6,14 +6,7 @@ import { useViewport } from '../../shared/hooks/useViewport'
 import { Globe } from './Globe'
 import { Parallax } from '../../shared/components/Parallax'
 import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
-
-const ease = [0.22, 1, 0.36, 1] as const
-const reveal = (delay: number) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.9, delay, ease },
-})
+import { revealOnScroll } from '../../shared/motion'
 
 const formatTime = (d: Date) =>
   d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
@@ -56,7 +49,7 @@ export function GlobeSection() {
 
   return (
     <section className="globe-section" aria-labelledby="globe-title">
-      <motion.div className="globe-intro" {...reveal(0)}>
+      <motion.div className="globe-intro" {...revealOnScroll(0)}>
         <Parallax distance={50}>
           <div id="globe-title">
             <ScrollSpreadQuote as="h2" className="globe-title" text="Discover Expart pop up events around the globe" />
@@ -64,7 +57,7 @@ export function GlobeSection() {
         </Parallax>
       </motion.div>
 
-      <motion.div className="globe-stage" {...reveal(0.15)}>
+      <motion.div className="globe-stage" {...revealOnScroll(0.15)}>
         <Globe
           size={size}
           pins={events}
@@ -73,7 +66,7 @@ export function GlobeSection() {
         />
       </motion.div>
 
-      <motion.div className="globe-clock" {...reveal(0.25)}>
+      <motion.div className="globe-clock" {...revealOnScroll(0.25)}>
         <Parallax distance={30}>
           <dl className="globe-readout">
             <div>
@@ -88,7 +81,7 @@ export function GlobeSection() {
         </Parallax>
       </motion.div>
 
-      <motion.div className="globe-coords" {...reveal(0.3)}>
+      <motion.div className="globe-coords" {...revealOnScroll(0.3)}>
         <Parallax distance={30}>
           <dl className="globe-readout">
             <div>
@@ -103,7 +96,7 @@ export function GlobeSection() {
         </Parallax>
       </motion.div>
 
-      <motion.div className="globe-copy" {...reveal(0.35)}>
+      <motion.div className="globe-copy" {...revealOnScroll(0.35)}>
         <Parallax distance={60}>
           <p className="mb-0">
             Expart travels from city to city, taking its events to places that care about sound as much as we

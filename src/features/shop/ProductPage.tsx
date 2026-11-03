@@ -6,13 +6,7 @@ import { ColorSwatches } from './ColorSwatches'
 import { ProductCard } from './ProductCard'
 import { findProduct, formatPrice, merch, type MerchColor, type MerchProduct } from './merch'
 import { pageHref } from '../../shared/hooks/usePage'
-
-const ease = [0.22, 1, 0.36, 1] as const
-const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease },
-})
+import { EASE_OUT, rise } from '../../shared/motion'
 
 type View = 'model' | 'product'
 
@@ -34,7 +28,7 @@ function Gallery({ product, color }: { product: MerchProduct; color: MerchColor 
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease }}
+            transition={{ duration: 0.5, ease: EASE_OUT }}
           />
         </AnimatePresence>
       </div>

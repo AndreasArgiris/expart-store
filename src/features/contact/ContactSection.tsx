@@ -5,14 +5,7 @@ import { Parallax } from '../../shared/components/Parallax'
 import { PickupCursors } from './PickupCursors'
 import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
 import { Waveform } from './Waveform'
-
-const ease = [0.22, 1, 0.36, 1] as const
-const reveal = (delay: number) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.9, delay, ease },
-})
+import { revealOnScroll } from '../../shared/motion'
 
 const EMAIL = 'expart.corp@gmail.com'
 
@@ -24,23 +17,23 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="row g-0 align-items-center contact-section" aria-labelledby="contact-title">
-      <motion.div className="col-12 contact-wave" {...reveal(0)}>
+      <motion.div className="col-12 contact-wave" {...revealOnScroll(0)}>
         <Waveform className="waveform" />
       </motion.div>
 
-      <motion.div className="col-12 col-lg-6 contact-art" {...reveal(0)}>
+      <motion.div className="col-12 col-lg-6 contact-art" {...revealOnScroll(0)}>
         <Parallax distance={50}>
           <PickupCursors className="pickup-cursors" />
         </Parallax>
       </motion.div>
 
       <div className="col-12 col-lg-6 contact-main">
-        <motion.div {...reveal(0.1)}>
+        <motion.div {...revealOnScroll(0.1)}>
           <Parallax distance={30}>
             <div className="sq-label mb-4">Contact</div>
           </Parallax>
         </motion.div>
-        <motion.div {...reveal(0.2)}>
+        <motion.div {...revealOnScroll(0.2)}>
           <Parallax distance={45}>
             <div id="contact-title">
               <ScrollSpreadQuote
@@ -52,7 +45,7 @@ export function ContactSection() {
             </div>
           </Parallax>
         </motion.div>
-        <motion.div {...reveal(0.3)}>
+        <motion.div {...revealOnScroll(0.3)}>
           <Parallax distance={60}>
             <p className="contact-copy">
               Bookings, collaborations, a venue you think we should play, or a record you can't find. Write to

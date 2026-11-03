@@ -4,6 +4,7 @@ import { feature, mesh } from 'topojson-client'
 import type { GeometryCollection, Topology } from 'topojson-specification'
 import worldUrl from 'world-atlas/countries-110m.json?url'
 import { formatEventDate, type ShopEvent } from '../events/events'
+import { ACCENT } from '../../shared/theme'
 
 // Auto-rotation in degrees per ms (≈ 5°/s, one turn every ~72s).
 const AUTO_SPEED = 0.005
@@ -11,7 +12,6 @@ const AUTO_SPEED = 0.005
 const TILT = -22
 const DRAG_FACTOR = 0.28
 const PIN_HIT_RADIUS = 12
-const ACCENT = '#e5361f'
 
 interface World {
   land: GeoPermissibleObjects

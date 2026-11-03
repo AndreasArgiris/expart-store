@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { events, formatEventDate, mapsUrl } from './events'
 import { Flag } from '../../shared/components/Flag'
 import { useViewport } from '../../shared/hooks/useViewport'
+import { EASE_IN_OUT } from '../../shared/motion'
 
 const count = events.length
 const wrap = (i: number) => ((i % count) + count) % count
@@ -13,7 +14,6 @@ const GAP = 24
 // Extra room below the frame for the details block, so the next poster doesn't sit on it.
 const META_SPACE = 96
 const WHEEL_LOCK_MS = 900
-const ease = [0.65, 0, 0.35, 1] as const
 const fade = {
   initial: { opacity: 0, y: 6 },
   animate: { opacity: 1, y: 0 },
@@ -113,7 +113,7 @@ export function EventsPage() {
                         scale: active ? 1 : 0.97,
                       }}
                       whileHover={active ? undefined : { opacity: 0.5 }}
-                      transition={{ duration: 0.8, ease }}
+                      transition={{ duration: 0.8, ease: EASE_IN_OUT }}
                       onClick={() => !active && setIndex(i)}
                       tabIndex={active || dist > 1 ? -1 : 0}
                       aria-hidden={active || dist > 1}

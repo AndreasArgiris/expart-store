@@ -3,8 +3,8 @@ import { ContactSection } from '../contact/ContactSection'
 import { Parallax } from '../../shared/components/Parallax'
 import { ProductCard } from './ProductCard'
 import { merch } from './merch'
+import { EASE_OUT } from '../../shared/motion'
 
-const ease = [0.22, 1, 0.36, 1] as const
 
 export function ShopPage() {
   return (
@@ -13,7 +13,7 @@ export function ShopPage() {
         className="shop-head"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1, ease }}
+        transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT }}
       >
         <Parallax distance={20}>
           <div className="d-flex justify-content-between align-items-center">

@@ -1,8 +1,9 @@
-import { useEffect, useId, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useMotionValue } from 'motion/react'
 import { useCursorReveal } from './useCursorReveal'
 import { useMediaQuery } from '../../shared/hooks/useMediaQuery'
 import { Blob } from '../vinyl/CoverLiquid'
+import { useSvgId } from '../../shared/hooks/useSvgId'
 
 // Compressed with `npm run compress:video` (original: hero_storyboard_ink_animatic.mp4).
 const VIDEO_SRC = '/media/hero-reveal.mp4'
@@ -31,7 +32,7 @@ export function HeroVideoReveal() {
 }
 
 function RevealLayer() {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const id = useSvgId()
   const gooId = `hero-goo-${id}`
   const maskId = `hero-liquid-${id}`
   const layerRef = useRef<HTMLDivElement>(null)

@@ -1,6 +1,9 @@
-import { useId, useRef, type PointerEvent } from 'react'
+import { useRef, type PointerEvent } from 'react'
 import { animate, useMotionValue } from 'motion/react'
 import { Blob } from '../features/vinyl/CoverLiquid'
+import { EASE_IN_OUT } from '../shared/motion'
+import { ACCENT } from '../shared/theme'
+import { useSvgId } from '../shared/hooks/useSvgId'
 
 const LOGO_SRC = '/media/logo.svg'
 // Native size of logo.svg's viewBox; everything below is in these units.
@@ -14,14 +17,13 @@ const TRAIL = [
   { scale: 0.52, stiffness: 78, damping: 13, stretch: 0.45 },
   { scale: 0.38, stiffness: 50, damping: 11, stretch: 0.3 },
 ]
-const ACCENT = '#e5361f'
 
 /**
  * The black logo with an identical red copy stacked on top, hidden behind a liquid (goo-filtered)
  * mask. Hovering pours red through the logo where the cursor is; leaving drains it away.
  */
 export function LiquidLogo({ width = 125 }: { width?: number }) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const id = useSvgId()
   const gooId = `logo-goo-${id}`
   const liquidId = `logo-liquid-${id}`
   const shapeId = `logo-shape-${id}`
@@ -56,7 +58,7 @@ export function LiquidLogo({ width = 125 }: { width?: number }) {
       onPointerLeave={(e) => {
         if (e.pointerType !== 'mouse') return
         moveTo(e)
-        animate(radius, 0, { duration: 0.7, ease: [0.65, 0, 0.35, 1] })
+        animate(radius, 0, { duration: 0.7, ease: EASE_IN_OUT })
       }}
     >
       <defs>

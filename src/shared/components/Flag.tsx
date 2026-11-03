@@ -1,11 +1,11 @@
-import { useId } from 'react'
 import type { CountryCode } from '../../features/events/events'
+import { useSvgId } from '../hooks/useSvgId'
 
 export type FlagCode = CountryCode | 'GR' | 'GB' | 'IE'
 
 /** Small flat flags (emoji flags don't render on Windows). */
 export function Flag({ code, className = '' }: { code: FlagCode; className?: string }) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const id = useSvgId()
 
   return (
     <svg className={`flag ${className}`} viewBox="0 0 16 11" aria-hidden="true">

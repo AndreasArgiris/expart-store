@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import { animate, useMotionValue } from 'motion/react'
+import { EASE_OUT } from '../../shared/motion'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 const GROW_IN = { type: 'spring', stiffness: 120, damping: 14 } as const // blob lands with a little overshoot
 const FADE_OUT = 2 // s, liquid lingers and drains away after the cursor leaves
 
@@ -41,7 +41,7 @@ export function useCursorReveal(area: RefObject<HTMLElement | null>, radius: num
         setIsVisible(true)
         animate(blobRadius, radius, GROW_IN)
       } else {
-        animate(blobRadius, 0, { duration: FADE_OUT, ease: EASE, onComplete: () => setIsVisible(false) })
+        animate(blobRadius, 0, { duration: FADE_OUT, ease: EASE_OUT, onComplete: () => setIsVisible(false) })
       }
     }
 

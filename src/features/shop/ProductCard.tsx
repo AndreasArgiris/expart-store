@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'motion/react'
 import { formatPrice, type MerchProduct } from './merch'
 import { productHref } from '../../shared/hooks/usePage'
 import { ColorSwatches } from './ColorSwatches'
+import { EASE_OUT } from '../../shared/motion'
 
-const ease = [0.22, 1, 0.36, 1] as const
 
 /**
  * Shop grid card: model shot (or product shot) that swaps to the flat product shot on hover,
@@ -22,7 +22,7 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, delay, ease }}
+      transition={{ duration: 0.8, delay, ease: EASE_OUT }}
     >
       <a href={href} className={`product-media${color.model ? ' has-model' : ''}`} aria-label={`${product.name}, ${color.name}`}>
         <AnimatePresence initial={false}>
@@ -66,7 +66,7 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.35, ease }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
               >
                 {product.tagline}
               </motion.p>

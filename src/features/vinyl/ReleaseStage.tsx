@@ -4,6 +4,7 @@ import { useViewport } from '../../shared/hooks/useViewport'
 import { CoverLiquid } from './CoverLiquid'
 import { PlayerControls } from './PlayerControls'
 import { Vinyl } from './Vinyl'
+import { EASE_IN_OUT } from '../../shared/motion'
 
 interface ReleaseStageProps {
   releases: Release[]
@@ -17,8 +18,7 @@ interface ReleaseStageProps {
   onToggleInfo: () => void
 }
 
-const ease = [0.65, 0, 0.35, 1] as const
-const slide = { duration: 0.7, ease }
+const slide = { duration: 0.7, ease: EASE_IN_OUT }
 const fade = {
   initial: { opacity: 0, y: 6 },
   animate: { opacity: 1, y: 0 },

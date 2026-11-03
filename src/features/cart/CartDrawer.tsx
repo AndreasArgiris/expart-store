@@ -4,8 +4,8 @@ import { formatPrice } from '../shop/merch'
 import { productHref } from '../../shared/hooks/usePage'
 import { useCart } from './cartContext'
 import { PayPalCheckout } from './PayPalCheckout'
+import { EASE_OUT } from '../../shared/motion'
 
-const ease = [0.22, 1, 0.36, 1] as const
 
 export function CartDrawer() {
   const { entries, count, subtotal, isOpen, close, setQty, remove, clear } = useCart()
@@ -49,7 +49,7 @@ export function CartDrawer() {
             initial={{ x: '105%' }}
             animate={{ x: 0 }}
             exit={{ x: '105%' }}
-            transition={{ duration: 0.45, ease }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
           >
             <span className="fc fc-tl" />
             <span className="fc fc-tr" />

@@ -3,14 +3,7 @@ import { motion, useInView, useScroll, useSpring, useTransform } from 'motion/re
 import { Flag, type FlagCode } from '../../shared/components/Flag'
 import { Parallax } from '../../shared/components/Parallax'
 import { QuoteWord } from '../../shared/components/SpacedQuote'
-
-const ease = [0.22, 1, 0.36, 1] as const
-const reveal = (delay: number) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.9, delay, ease },
-})
+import { revealOnScroll } from '../../shared/motion'
 
 interface Founder {
   name: string
@@ -88,7 +81,7 @@ function TeamCount() {
 
 function FounderCard({ founder, index }: { founder: Founder; index: number }) {
   return (
-    <motion.div className="founder" {...reveal(0.25 + index * 0.1)}>
+    <motion.div className="founder" {...revealOnScroll(0.25 + index * 0.1)}>
       <Parallax distance={40}>
         <div className="founder-index">
           [{String(index + 1).padStart(2, '0')}] {founder.position}
@@ -121,7 +114,7 @@ function FounderCard({ founder, index }: { founder: Founder; index: number }) {
 export function FoundersSection() {
   return (
     <section className="founders" aria-labelledby="founders-title">
-      <motion.div {...reveal(0)}>
+      <motion.div {...revealOnScroll(0)}>
         <Parallax distance={30}>
           <div id="founders-title" className="sq-label">
             Founders
@@ -130,7 +123,7 @@ export function FoundersSection() {
       </motion.div>
 
       <div className="row g-0 align-items-center founders-grid">
-        <motion.div className="col-12 col-lg-5 founders-photo" {...reveal(0.1)}>
+        <motion.div className="col-12 col-lg-5 founders-photo" {...revealOnScroll(0.1)}>
           <Parallax distance={20}>
             <div className="founders-frame">
               <span className="fc fc-tl" />
@@ -147,7 +140,7 @@ export function FoundersSection() {
         </motion.div>
 
         <div className="col-12 col-lg-7 founders-info">
-          <motion.div className="founders-team" {...reveal(0.15)}>
+          <motion.div className="founders-team" {...revealOnScroll(0.15)}>
             <Parallax distance={30}>
               <p className="mb-0">
                 <TeamCount />
