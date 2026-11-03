@@ -1,5 +1,5 @@
 import { useId, useRef, type PointerEvent } from 'react'
-import { animate, useMotionValue } from 'framer-motion'
+import { animate, useMotionValue } from 'motion/react'
 import { Blob } from './CoverLiquid'
 
 const LOGO_SRC = '/media/logo.svg'

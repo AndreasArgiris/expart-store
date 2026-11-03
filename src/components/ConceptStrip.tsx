@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
+import { motion, useAnimationFrame, useMotionValue } from 'motion/react'
 
 const CONCEPTS = [1, 2, 3, 4, 5, 6].map((n) => `/media/products/concepts/concept${n}.webp`)
 // Drift speed in px per ms.

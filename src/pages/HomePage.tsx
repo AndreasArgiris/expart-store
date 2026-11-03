@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { ContactSection } from '../components/ContactSection'
 import { GlobeSection } from '../components/GlobeSection'
 import { HeroVideoReveal } from '../components/HeroVideoReveal'

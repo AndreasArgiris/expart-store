@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useViewport } from '../hooks/useViewport'
 import { CopyEmail } from './CopyEmail'
 import { Parallax } from './Parallax'

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { ContactSection } from '../components/ContactSection'
 import { Parallax } from '../components/Parallax'
 import { ProductCard } from '../components/shop/ProductCard'

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { events } from '../data/events'
 import { pageHref } from '../hooks/usePage'
 import { useViewport } from '../hooks/useViewport'

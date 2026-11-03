@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { useCart } from '../cart/cartContext'
 import { Parallax } from '../components/Parallax'
 import { ColorSwatches } from '../components/shop/ColorSwatches'

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
-import { animate, useMotionValue } from 'framer-motion'
+import { animate, useMotionValue } from 'motion/react'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 const GROW_IN = { type: 'spring', stiffness: 120, damping: 14 } as const // blob lands with a little overshoot

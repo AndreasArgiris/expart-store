@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { animate, motion, useMotionValue, useReducedMotion } from 'framer-motion'
+import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 
 // Redrawn from public/media/pickup=cursors.svg (viewBox 0 0 426 315.786): five fader tracks, each
 // with a cap. The caps are split out so they can slide along continuous tracks.

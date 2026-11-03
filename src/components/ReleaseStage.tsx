@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { formatDate, type Release } from '../data/releases'
 import { useViewport } from '../hooks/useViewport'
 import { CoverLiquid } from './CoverLiquid'

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { ConceptStrip } from '../components/ConceptStrip'
 import { ContactSection } from '../components/ContactSection'
 import { FoundersSection } from '../components/FoundersSection'

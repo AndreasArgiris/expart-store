@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { formatPrice } from '../data/merch'
 import { productHref } from '../hooks/usePage'
 import { useCart } from './cartContext'

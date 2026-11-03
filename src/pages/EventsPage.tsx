@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type WheelEvent } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { events, formatEventDate, mapsUrl } from '../data/events'
 import { Flag } from '../components/Flag'
 import { useViewport } from '../hooks/useViewport'

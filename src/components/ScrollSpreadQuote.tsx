@@ -6,7 +6,7 @@ import {
   useSpring,
   useTransform,
   type MotionValue,
-} from 'framer-motion'
+} from 'motion/react'
 import { GAP_EM, PULSE_MS, QuoteWord } from './SpacedQuote'
 
 // Spread is fully open once it reaches this progress; only then do the red scrambles run.

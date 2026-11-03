@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState, type PointerEvent, type RefObject } from 'react'
-import { animate, motion, useAnimationFrame, useMotionValue, useSpring, useTransform, type MotionValue } from 'framer-motion'
+import { animate, motion, useAnimationFrame, useMotionValue, useSpring, useTransform, type MotionValue } from 'motion/react'
 
 // Lead hover blob radius as a fraction of the frame.
 const SPOT = 0.11

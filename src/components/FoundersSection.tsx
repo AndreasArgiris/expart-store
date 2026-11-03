@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { motion, useInView, useScroll, useSpring, useTransform } from 'framer-motion'
+import { motion, useInView, useScroll, useSpring, useTransform } from 'motion/react'
 import { Flag, type FlagCode } from './Flag'
 import { Parallax } from './Parallax'
 import { QuoteWord } from './SpacedQuote'

@@ -1,5 +1,5 @@
 import { useRef, type ReactNode } from 'react'
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 
 interface ParallaxProps {
   children: ReactNode

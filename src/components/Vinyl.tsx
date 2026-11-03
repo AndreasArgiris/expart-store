@@ -1,4 +1,4 @@
-import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
+import { motion, useAnimationFrame, useMotionValue } from 'motion/react'
 
 // 33⅓ rpm expressed in degrees per millisecond.
 const DEG_PER_MS = (360 * (100 / 3)) / 60_000

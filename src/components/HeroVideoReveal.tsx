@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef } from 'react'
-import { useMotionValue } from 'framer-motion'
+import { useMotionValue } from 'motion/react'
 import { useCursorReveal } from '../hooks/useCursorReveal'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { Blob } from './CoverLiquid'

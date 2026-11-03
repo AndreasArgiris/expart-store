@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { motion, type MotionValue } from 'framer-motion'
+import { motion, type MotionValue } from 'motion/react'
 import { useScramble } from '../hooks/useScramble'
 
 // A justified gap wider than this many ems counts as "spaced" (a normal space is ~0.28em).
