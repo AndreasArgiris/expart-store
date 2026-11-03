@@ -1,8 +1,8 @@
 import { motion } from 'motion/react'
-import { ContactSection } from '../components/ContactSection'
-import { Parallax } from '../components/Parallax'
-import { ProductCard } from '../components/shop/ProductCard'
-import { merch } from '../data/merch'
+import { ContactSection } from '../contact/ContactSection'
+import { Parallax } from '../../shared/components/Parallax'
+import { ProductCard } from './ProductCard'
+import { merch } from './merch'
 
 const ease = [0.22, 1, 0.36, 1] as const
 

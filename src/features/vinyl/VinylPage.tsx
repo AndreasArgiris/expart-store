@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { releases } from '../data/releases'
-import { ReleaseStage } from '../components/ReleaseStage'
+import { releases } from './releases'
+import { ReleaseStage } from './ReleaseStage'
 
 const count = releases.length
 const wrap = (i: number) => ((i % count) + count) % count

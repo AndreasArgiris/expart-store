@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { useCart } from '../../cart/cartContext'
+import { useCart } from './cartContext'
 
 /** Floating "Cart (n items)" tab, bottom right, on shop pages. */
 export function CartButton() {

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { findProduct, type MerchColor, type MerchProduct } from '../data/merch'
+import { findProduct, type MerchColor, type MerchProduct } from '../shop/merch'
 
 export interface CartLine {
   slug: string

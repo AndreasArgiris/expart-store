@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, useScroll, useSpring, useTransform } from 'motion/react'
-import { Flag, type FlagCode } from './Flag'
-import { Parallax } from './Parallax'
-import { QuoteWord } from './SpacedQuote'
+import { Flag, type FlagCode } from '../../shared/components/Flag'
+import { Parallax } from '../../shared/components/Parallax'
+import { QuoteWord } from '../../shared/components/SpacedQuote'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const reveal = (delay: number) => ({

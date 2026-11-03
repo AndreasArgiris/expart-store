@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { CountryCode } from '../data/events'
+import type { CountryCode } from '../../features/events/events'
 
 export type FlagCode = CountryCode | 'GR' | 'GB' | 'IE'
 

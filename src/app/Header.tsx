@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react'
-import { useCart } from '../cart/cartContext'
-import { events } from '../data/events'
-import { releases } from '../data/releases'
-import { pageHref, type Page } from '../hooks/usePage'
-import { useScramble } from '../hooks/useScramble'
+import { useCart } from '../features/cart/cartContext'
+import { events } from '../features/events/events'
+import { releases } from '../features/vinyl/releases'
+import { pageHref, type Page } from '../shared/hooks/usePage'
+import { useScramble } from '../shared/hooks/useScramble'
 import { LiquidLogo } from './LiquidLogo'
 
 type NavPage = Exclude<Page, 'product'>

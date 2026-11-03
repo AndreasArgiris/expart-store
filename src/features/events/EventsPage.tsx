@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type WheelEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { events, formatEventDate, mapsUrl } from '../data/events'
-import { Flag } from '../components/Flag'
-import { useViewport } from '../hooks/useViewport'
+import { events, formatEventDate, mapsUrl } from './events'
+import { Flag } from '../../shared/components/Flag'
+import { useViewport } from '../../shared/hooks/useViewport'
 
 const count = events.length
 const wrap = (i: number) => ((i % count) + count) % count

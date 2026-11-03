@@ -1,9 +1,9 @@
 import { motion } from 'motion/react'
-import { ConceptStrip } from '../components/ConceptStrip'
-import { ContactSection } from '../components/ContactSection'
-import { FoundersSection } from '../components/FoundersSection'
-import { Parallax } from '../components/Parallax'
-import { SpacedQuote } from '../components/SpacedQuote'
+import { ConceptStrip } from './ConceptStrip'
+import { ContactSection } from '../contact/ContactSection'
+import { FoundersSection } from './FoundersSection'
+import { Parallax } from '../../shared/components/Parallax'
+import { SpacedQuote } from '../../shared/components/SpacedQuote'
 
 const QUOTE = 'Digging deeper through vinyl, sound & human connection'
 const ease = [0.22, 1, 0.36, 1] as const

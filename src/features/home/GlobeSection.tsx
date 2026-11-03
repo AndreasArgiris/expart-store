@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'motion/react'
-import { events } from '../data/events'
-import { pageHref } from '../hooks/usePage'
-import { useViewport } from '../hooks/useViewport'
+import { events } from '../events/events'
+import { pageHref } from '../../shared/hooks/usePage'
+import { useViewport } from '../../shared/hooks/useViewport'
 import { Globe } from './Globe'
-import { Parallax } from './Parallax'
-import { ScrollSpreadQuote } from './ScrollSpreadQuote'
+import { Parallax } from '../../shared/components/Parallax'
+import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const reveal = (delay: number) => ({

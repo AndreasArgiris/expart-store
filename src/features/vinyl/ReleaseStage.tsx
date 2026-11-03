@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { formatDate, type Release } from '../data/releases'
-import { useViewport } from '../hooks/useViewport'
+import { formatDate, type Release } from './releases'
+import { useViewport } from '../../shared/hooks/useViewport'
 import { CoverLiquid } from './CoverLiquid'
 import { PlayerControls } from './PlayerControls'
 import { Vinyl } from './Vinyl'

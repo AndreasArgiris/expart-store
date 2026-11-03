@@ -3,7 +3,7 @@ import { geoDistance, geoGraticule10, geoOrthographic, geoPath, type GeoPermissi
 import { feature, mesh } from 'topojson-client'
 import type { GeometryCollection, Topology } from 'topojson-specification'
 import worldUrl from 'world-atlas/countries-110m.json?url'
-import { formatEventDate, type ShopEvent } from '../data/events'
+import { formatEventDate, type ShopEvent } from '../events/events'
 
 // Auto-rotation in degrees per ms (≈ 5°/s, one turn every ~72s).
 const AUTO_SPEED = 0.005

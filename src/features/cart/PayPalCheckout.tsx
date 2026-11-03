@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { CURRENCY } from '../data/merch'
+import { CURRENCY } from '../shop/merch'
 import type { CartEntry } from './cartContext'
 
 // Set VITE_PAYPAL_CLIENT_ID in .env (see .env.example). "test" is PayPal's sandbox placeholder:

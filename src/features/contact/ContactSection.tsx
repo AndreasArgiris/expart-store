@@ -1,9 +1,9 @@
 import { motion } from 'motion/react'
-import { useViewport } from '../hooks/useViewport'
+import { useViewport } from '../../shared/hooks/useViewport'
 import { CopyEmail } from './CopyEmail'
-import { Parallax } from './Parallax'
+import { Parallax } from '../../shared/components/Parallax'
 import { PickupCursors } from './PickupCursors'
-import { ScrollSpreadQuote } from './ScrollSpreadQuote'
+import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
 import { Waveform } from './Waveform'
 
 const ease = [0.22, 1, 0.36, 1] as const

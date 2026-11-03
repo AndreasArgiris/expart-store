@@ -1,6 +1,6 @@
 import { useId, useRef, type PointerEvent } from 'react'
 import { animate, useMotionValue } from 'motion/react'
-import { Blob } from './CoverLiquid'
+import { Blob } from '../features/vinyl/CoverLiquid'
 
 const LOGO_SRC = '/media/logo.svg'
 // Native size of logo.svg's viewBox; everything below is in these units.

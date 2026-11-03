@@ -1,4 +1,4 @@
-import type { MerchColor } from '../../data/merch'
+import type { MerchColor } from './merch'
 
 interface Props {
   colors: MerchColor[]

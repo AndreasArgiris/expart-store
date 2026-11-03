@@ -1,8 +1,8 @@
 import { useEffect, useId, useRef } from 'react'
 import { useMotionValue } from 'motion/react'
-import { useCursorReveal } from '../hooks/useCursorReveal'
-import { useMediaQuery } from '../hooks/useMediaQuery'
-import { Blob } from './CoverLiquid'
+import { useCursorReveal } from './useCursorReveal'
+import { useMediaQuery } from '../../shared/hooks/useMediaQuery'
+import { Blob } from '../vinyl/CoverLiquid'
 
 // Compressed with `npm run compress:video` (original: hero_storyboard_ink_animatic.mp4).
 const VIDEO_SRC = '/media/hero-reveal.mp4'

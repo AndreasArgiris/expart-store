@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { formatPrice, type MerchProduct } from '../../data/merch'
-import { productHref } from '../../hooks/usePage'
+import { formatPrice, type MerchProduct } from './merch'
+import { productHref } from '../../shared/hooks/usePage'
 import { ColorSwatches } from './ColorSwatches'
 
 const ease = [0.22, 1, 0.36, 1] as const

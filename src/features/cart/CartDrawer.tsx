@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { formatPrice } from '../data/merch'
-import { productHref } from '../hooks/usePage'
+import { formatPrice } from '../shop/merch'
+import { productHref } from '../../shared/hooks/usePage'
 import { useCart } from './cartContext'
 import { PayPalCheckout } from './PayPalCheckout'
 

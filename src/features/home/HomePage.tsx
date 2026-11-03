@@ -1,10 +1,10 @@
 import { motion } from 'motion/react'
-import { ContactSection } from '../components/ContactSection'
-import { GlobeSection } from '../components/GlobeSection'
-import { HeroVideoReveal } from '../components/HeroVideoReveal'
-import { Parallax } from '../components/Parallax'
-import { formatEventDate, nextEvent } from '../data/events'
-import { pageHref } from '../hooks/usePage'
+import { ContactSection } from '../contact/ContactSection'
+import { GlobeSection } from './GlobeSection'
+import { HeroVideoReveal } from './HeroVideoReveal'
+import { Parallax } from '../../shared/components/Parallax'
+import { formatEventDate, nextEvent } from '../events/events'
+import { pageHref } from '../../shared/hooks/usePage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 

@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCart } from '../cart/cartContext'
-import { Parallax } from '../components/Parallax'
-import { ColorSwatches } from '../components/shop/ColorSwatches'
-import { ProductCard } from '../components/shop/ProductCard'
-import { findProduct, formatPrice, merch, type MerchColor, type MerchProduct } from '../data/merch'
-import { pageHref } from '../hooks/usePage'
+import { Parallax } from '../../shared/components/Parallax'
+import { ColorSwatches } from './ColorSwatches'
+import { ProductCard } from './ProductCard'
+import { findProduct, formatPrice, merch, type MerchColor, type MerchProduct } from './merch'
+import { pageHref } from '../../shared/hooks/usePage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const rise = (delay: number) => ({
