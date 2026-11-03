@@ -4,12 +4,13 @@ import { useCursorReveal } from './useCursorReveal'
 import { useMediaQuery } from '../../shared/hooks/useMediaQuery'
 import { Blob } from '../vinyl/CoverLiquid'
 import { useSvgId } from '../../shared/hooks/useSvgId'
+import { BREAKPOINT_LG } from '../../shared/theme'
 
 // Compressed with `npm run compress:video` (original: hero_storyboard_ink_animatic.mp4).
 const VIDEO_SRC = '/media/hero-reveal.mp4'
 
 // Desktop with a real mouse, and the visitor hasn't asked for less motion.
-const REVEAL_QUERY = '(min-width: 992px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+const REVEAL_QUERY = `(min-width: ${BREAKPOINT_LG}px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)`
 
 // Lead blob radius (px) and its trailing droplets: each smaller and lazier, so the liquid drags behind
 // the cursor and stays on screen a while. Low damping lets them wobble like jelly.

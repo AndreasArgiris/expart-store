@@ -4,6 +4,7 @@ import { events, formatEventDate, mapsUrl } from './events'
 import { Flag } from '../../shared/components/Flag'
 import { useViewport } from '../../shared/hooks/useViewport'
 import { EASE_IN_OUT } from '../../shared/motion'
+import { BREAKPOINT_LG } from '../../shared/theme'
 
 const count = events.length
 const wrap = (i: number) => ((i % count) + count) % count
@@ -31,7 +32,7 @@ function ringOffset(i: number, active: number, n: number) {
 
 function useStageMetrics() {
   const { width, height } = useViewport()
-  const mobile = width < 992
+  const mobile = width < BREAKPOINT_LG
   const imgW = mobile ? Math.min(width - 70, 560) : Math.max(320, Math.min(560, width * 0.3, height * 0.46 * RATIO))
   const imgH = imgW / RATIO
   return { mobile, imgW, imgH, frameW: imgW + PAD * 2, frameH: imgH + PAD * 2 }

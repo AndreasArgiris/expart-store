@@ -7,6 +7,7 @@ import { Globe } from './Globe'
 import { Parallax } from '../../shared/components/Parallax'
 import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
 import { revealOnScroll } from '../../shared/motion'
+import { BREAKPOINT_LG } from '../../shared/theme'
 
 const formatTime = (d: Date) =>
   d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
@@ -38,7 +39,7 @@ export function GlobeSection() {
   const latRef = useRef<HTMLElement>(null)
   const lonRef = useRef<HTMLElement>(null)
 
-  const desktop = width >= 992
+  const desktop = width >= BREAKPOINT_LG
   const size = Math.round(desktop ? Math.min(720, height * 0.8, width * 0.42) : Math.min(width - 48, 520))
 
   // Written straight to the DOM: this fires every animation frame.

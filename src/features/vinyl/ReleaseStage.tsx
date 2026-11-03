@@ -5,6 +5,7 @@ import { CoverLiquid } from './CoverLiquid'
 import { PlayerControls } from './PlayerControls'
 import { Vinyl } from './Vinyl'
 import { EASE_IN_OUT } from '../../shared/motion'
+import { BREAKPOINT_MD } from '../../shared/theme'
 
 interface ReleaseStageProps {
   releases: Release[]
@@ -36,7 +37,7 @@ function ringOffset(i: number, active: number, n: number) {
 
 function useStageMetrics() {
   const { width, height } = useViewport()
-  const mobile = width < 768
+  const mobile = width < BREAKPOINT_MD
   const disc = mobile ? Math.min(width * 0.66, 340) : Math.max(220, Math.min(385, width * 0.21, height * 0.42))
   const spacing = mobile ? width * 0.78 : Math.max(disc * 1.2, width * 0.24)
   return { disc, spacing, frame: Math.round(disc * 1.13) }
