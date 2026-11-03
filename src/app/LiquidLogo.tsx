@@ -1,6 +1,6 @@
 import { useRef, type PointerEvent } from 'react'
 import { animate, useMotionValue } from 'motion/react'
-import { Blob } from '../features/vinyl/CoverLiquid'
+import { Blob } from '../shared/liquid/Blob'
 import { EASE_IN_OUT } from '../shared/motion'
 import { ACCENT } from '../shared/theme'
 import { useSvgId } from '../shared/hooks/useSvgId'

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useMotionValue } from 'motion/react'
 import { useCursorReveal } from './useCursorReveal'
 import { useMediaQuery } from '../../shared/hooks/useMediaQuery'
-import { Blob } from '../vinyl/CoverLiquid'
+import { Blob } from '../../shared/liquid/Blob'
 import { useSvgId } from '../../shared/hooks/useSvgId'
 import { BREAKPOINT_LG } from '../../shared/theme'
 
