@@ -1,10 +1,11 @@
-import { useState, type ComponentType } from 'react'
-import { AnimatePresence, motion, type Variants } from 'motion/react'
+import type { ComponentType } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { CartDrawer } from '../features/cart/CartDrawer'
 import { CartProvider } from '../features/cart/CartProvider'
 import { CartButton } from '../features/cart/CartButton'
 import { FrameMarks } from './FrameMarks'
 import { Header } from './Header'
+import { pageSlide, usePageTransition } from './usePageTransition'
 import { scrollingPages, useRoute, type Page, type Route } from '../shared/hooks/useRoute'
 import { AboutPage } from '../features/about/AboutPage'
 import { EventsPage } from '../features/events/EventsPage'
@@ -21,47 +22,17 @@ const pages: Record<Exclude<Page, 'product'>, ComponentType> = {
   shop: ShopPage,
 }
 
-// Menu order decides slide direction: moving "forward" brings content in from the right.
-const ORDER: Page[] = ['home', 'events', 'shop', 'product', 'vinyl', 'about']
-const SLIDE = 35 // vw
-const ease = [0.16, 1, 0.3, 1] as const
-
-// Opacity runs gentler than the slide so the content stays visible while it travels.
-const slide: Variants = {
-  enter: (dir: number) => ({ x: `${dir * SLIDE}vw`, opacity: 0 }),
-  center: {
-    x: '0vw',
-    opacity: 1,
-    transition: { x: { duration: 0.55, ease }, opacity: { duration: 0.35, ease: 'linear' } },
-  },
-  exit: (dir: number) => ({
-    x: `${dir * -SLIDE}vw`,
-    opacity: 0,
-    transition: { x: { duration: 0.28, ease: [0.4, 0, 0.9, 0.5] }, opacity: { duration: 0.28, ease: 'easeIn' } },
-  }),
-}
-
-// Each product is its own page, so moving between products slides too.
-const routeKey = (r: Route) => (r.page === 'product' ? `product/${r.slug}` : r.page)
-
 function renderPage(route: Route) {
   if (route.page === 'product') return <ProductPage slug={route.slug} color={route.color} />
   const PageComponent = pages[route.page]
   return <PageComponent />
 }
 
+/** The site shell: frame marks, header, the sliding page area, and the cart (button on shop pages, drawer). */
 function App() {
   const route = useRoute()
   const { page } = route
-  const key = routeKey(route)
-
-  // Derive slide direction from the previous page (state-during-render pattern, no effect needed).
-  const [nav, setNav] = useState({ key, page, dir: 1 })
-  if (nav.key !== key) setNav({ key, page, dir: ORDER.indexOf(page) >= ORDER.indexOf(nav.page) ? 1 : -1 })
-
-  // The page whose layout is on screen. It only switches once the old page has slid out, so locking
-  // to one viewport (Vinyl, Events) can't snap the scroll position mid-slide.
-  const [layoutPage, setLayoutPage] = useState(page)
+  const { key, direction, layoutPage, handleExitComplete } = usePageTransition(route)
 
   return (
     <CartProvider>
@@ -71,18 +42,15 @@ function App() {
 
         <AnimatePresence
           mode="wait"
-          custom={nav.dir}
+          custom={direction}
           initial={false}
-          onExitComplete={() => {
-            window.scrollTo(0, 0)
-            setLayoutPage(page)
-          }}
+          onExitComplete={handleExitComplete}
         >
           <motion.div
             key={key}
             className="page-body"
-            custom={nav.dir}
-            variants={slide}
+            custom={direction}
+            variants={pageSlide}
             initial="enter"
             animate="center"
             exit="exit"
