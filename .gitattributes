@@ -1,0 +1,7 @@
+# Keep LF everywhere (Prettier checks for it); binaries untouched.
+* text=auto eol=lf
+*.webp binary
+*.mp4 binary
+*.mp3 binary
+*.png binary
+*.jpg binary

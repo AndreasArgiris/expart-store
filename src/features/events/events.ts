@@ -64,12 +64,12 @@ export function mapsUrl(e: ShopEvent): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.venue}, ${e.address}`)}`
 }
 
-/** The soonest dated event from today on; falls back to the first listed event. */
 /** Has a confirmed date that is today or later. */
 export function isUpcoming(e: ShopEvent, today = new Date()): e is ShopEvent & { date: string } {
   return e.date !== null && e.date >= today.toISOString().slice(0, 10)
 }
 
+/** The soonest dated event from today on; falls back to the first listed event. */
 export function nextEvent(today = new Date()): ShopEvent {
   const upcoming = events
     .filter((e): e is ShopEvent & { date: string } => isUpcoming(e, today))
