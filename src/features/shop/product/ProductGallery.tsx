@@ -45,7 +45,10 @@ export function ProductGallery({ product, color }: ProductGalleryProps) {
               className={`pdp-thumb${shown === v ? ' is-active' : ''}`}
               onClick={() => setView(v)}
             >
-              <img src={v === 'model' ? color.model : color.image} alt={v === 'model' ? 'Model photo' : 'Product photo'} />
+              <img
+                src={v === 'model' ? color.model : color.image}
+                alt={v === 'model' ? 'Model photo' : 'Product photo'}
+              />
             </button>
           ))}
         </div>

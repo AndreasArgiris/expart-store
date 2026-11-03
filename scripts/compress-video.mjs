@@ -11,8 +11,27 @@ if (!input || !output) {
 
 const { status } = spawnSync(
   ffmpeg,
-  ['-y', '-i', input, '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '27', '-maxrate', '1800k', '-bufsize', '3600k',
-    '-pix_fmt', 'yuv420p', '-movflags', '+faststart', output],
+  [
+    '-y',
+    '-i',
+    input,
+    '-an',
+    '-c:v',
+    'libx264',
+    '-preset',
+    'slow',
+    '-crf',
+    '27',
+    '-maxrate',
+    '1800k',
+    '-bufsize',
+    '3600k',
+    '-pix_fmt',
+    'yuv420p',
+    '-movflags',
+    '+faststart',
+    output,
+  ],
   { stdio: 'inherit' },
 )
 process.exit(status ?? 1)

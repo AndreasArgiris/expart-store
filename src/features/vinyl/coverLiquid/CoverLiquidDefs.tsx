@@ -23,7 +23,12 @@ interface CoverLiquidDefsProps {
 
 /** The cover liquid's SVG filters (goo + refraction) and its mask: the pour, the hover trail and the splashes. */
 export function CoverLiquidDefs({ ids, size, els, children }: CoverLiquidDefsProps) {
-  const region = { x: -size * REGION_OVERHANG, y: -size * REGION_OVERHANG, width: size * (1 + 2 * REGION_OVERHANG), height: size * (1 + 2 * REGION_OVERHANG) }
+  const region = {
+    x: -size * REGION_OVERHANG,
+    y: -size * REGION_OVERHANG,
+    width: size * (1 + 2 * REGION_OVERHANG),
+    height: size * (1 + 2 * REGION_OVERHANG),
+  }
 
   return (
     <defs>
@@ -32,14 +37,28 @@ export function CoverLiquidDefs({ ids, size, els, children }: CoverLiquidDefsPro
         <feOffset ref={els.gooOffset} in="noiseRaw" result="noise" />
         <feGaussianBlur in="SourceGraphic" stdDeviation={size * GOO_BLUR} result="blur" />
         <feColorMatrix in="blur" type="matrix" values={GOO_THRESHOLD} result="goo" />
-        <feDisplacementMap in="goo" in2="noise" scale={size * GOO_WARP} xChannelSelector="R" yChannelSelector="G" result="warped" />
+        <feDisplacementMap
+          in="goo"
+          in2="noise"
+          scale={size * GOO_WARP}
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="warped"
+        />
         <feGaussianBlur in="warped" stdDeviation={GOO_SOFTEN} />
       </filter>
 
       <filter id={ids.refract} filterUnits="userSpaceOnUse" {...region} colorInterpolationFilters="sRGB">
         <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves={1} seed={3} result="noiseRaw" />
         <feOffset ref={els.refractOffset} in="noiseRaw" result="noise" />
-        <feDisplacementMap ref={els.refractMap} in="SourceGraphic" in2="noise" scale={0} xChannelSelector="R" yChannelSelector="G" />
+        <feDisplacementMap
+          ref={els.refractMap}
+          in="SourceGraphic"
+          in2="noise"
+          scale={0}
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
       </filter>
 
       <mask id={ids.mask} maskUnits="userSpaceOnUse" x={0} y={0} width={size} height={size}>

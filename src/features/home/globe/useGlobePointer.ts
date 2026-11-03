@@ -33,7 +33,13 @@ const localPoint = (e: CanvasPointer) => {
  * pin to open its event. `positions` must be kept up to date with where pins were drawn.
  */
 export function useGlobePointer(onPinClick?: (event: ShopEvent) => void) {
-  const spin = useRef<Spin>({ lambda: START_LONGITUDE, phi: TILT, velocity: AUTO_SPEED, isDragging: false, isOver: false })
+  const spin = useRef<Spin>({
+    lambda: START_LONGITUDE,
+    phi: TILT,
+    velocity: AUTO_SPEED,
+    isDragging: false,
+    isOver: false,
+  })
   const positions = useRef<PinPosition[]>([])
   const drag = useRef({ x: 0, y: 0, t: 0, moved: 0 })
   const [hovered, setHovered] = useState<ShopEvent | null>(null)

@@ -21,8 +21,8 @@ export function VinylPage() {
         <div className="col-12 col-md-4">
           <div className="sq-label mb-4">Vinyl</div>
           <p className="intro mb-0">
-            Independent vinyl, hand-picked. Every record on our shelves is chosen for the way it sounds, not
-            the way it sells.
+            Independent vinyl, hand-picked. Every record on our shelves is chosen for the way it sounds, not the way it
+            sells.
           </p>
         </div>
 

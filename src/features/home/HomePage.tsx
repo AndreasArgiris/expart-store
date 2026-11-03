@@ -7,7 +7,6 @@ import { formatEventDate, nextEvent } from '../events/events'
 import { pageHref } from '../../shared/hooks/useRoute'
 import { EASE_OUT, rise } from '../../shared/motion'
 
-
 // Each frame corner slides in from its own diagonal.
 const corners = [
   { className: 'fc fc-tl', from: { x: -14, y: -14 } },

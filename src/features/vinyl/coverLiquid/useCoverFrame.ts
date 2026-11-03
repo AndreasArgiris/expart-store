@@ -40,7 +40,17 @@ interface CoverFrameArgs {
  * The cover liquid's per-frame drawing: pour, splashes, the clean-cover settle, noise drift and refraction.
  * Returns a stable `clearMask` that empties the pour and clean cover immediately, without waiting a frame.
  */
-export function useCoverFrame({ size, els, pour, splashes, lead, dropletFill, hoverRadius, isHovering, lastSpawn }: CoverFrameArgs) {
+export function useCoverFrame({
+  size,
+  els,
+  pour,
+  splashes,
+  lead,
+  dropletFill,
+  hoverRadius,
+  isHovering,
+  lastSpawn,
+}: CoverFrameArgs) {
   // 0–1: how much hover holes/splashes need the masked layer visible (clean layer steps aside).
   const holeMix = useRef(0)
   const lastRefraction = useRef(-1)
@@ -61,7 +71,8 @@ export function useCoverFrame({ size, els, pour, splashes, lead, dropletFill, ho
 
     // Splashes flung sideways off the hover path, then their physics.
     const l = lead.current
-    if (isHovering.current && l.r > LEAD_FLINGS_ABOVE) flingFromLead(splashes.current, l, lastSpawn.current, size, dropletFill.get())
+    if (isHovering.current && l.r > LEAD_FLINGS_ABOVE)
+      flingFromLead(splashes.current, l, lastSpawn.current, size, dropletFill.get())
     const { isSplashing, hasHoles } = stepSplashes(splashes.current, els.splashDrops.current, dt)
 
     // Settle: fade a clean cover over the end of the pour so the warped edges melt away.

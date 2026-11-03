@@ -31,7 +31,11 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
       {...CARD_REVEAL}
       transition={{ duration: CARD_REVEAL_DURATION, delay, ease: EASE_OUT }}
     >
-      <a href={href} className={`product-media${color.model ? ' has-model' : ''}`} aria-label={`${product.name}, ${color.name}`}>
+      <a
+        href={href}
+        className={`product-media${color.model ? ' has-model' : ''}`}
+        aria-label={`${product.name}, ${color.name}`}
+      >
         <AnimatePresence initial={false}>
           <motion.div
             key={color.id}
@@ -41,7 +45,9 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
             exit={{ opacity: 0 }}
             transition={SWAP_FADE}
           >
-            {color.model && <img className="product-img product-img--model" src={color.model} alt="" draggable={false} />}
+            {color.model && (
+              <img className="product-img product-img--model" src={color.model} alt="" draggable={false} />
+            )}
             <img className="product-img product-img--flat" src={color.image} alt="" draggable={false} />
           </motion.div>
         </AnimatePresence>

@@ -19,7 +19,12 @@ function isCountriesTopology(data: unknown): data is Topology<{ countries: Geome
   if (!('arcs' in data) || !Array.isArray(data.arcs) || !('objects' in data) || !isObject(data.objects)) return false
   if (!('countries' in data.objects) || !isObject(data.objects.countries)) return false
   const { countries } = data.objects
-  return 'type' in countries && countries.type === 'GeometryCollection' && 'geometries' in countries && Array.isArray(countries.geometries)
+  return (
+    'type' in countries &&
+    countries.type === 'GeometryCollection' &&
+    'geometries' in countries &&
+    Array.isArray(countries.geometries)
+  )
 }
 
 /** Loads the bundled world atlas and turns it into land + borders. Throws if it can't be loaded or parsed. */

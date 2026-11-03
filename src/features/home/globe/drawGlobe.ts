@@ -29,7 +29,12 @@ const PIN_HALF = 4.5 // px
 const PIN_HALF_HOVERED = 6.5 // px
 
 /** Draws the sea, graticule, land, borders and outline. `path` must be bound to the canvas context. */
-export function drawGlobe(ctx: CanvasRenderingContext2D, path: GeoPath, world: World, graticule: GeoPermissibleObjects) {
+export function drawGlobe(
+  ctx: CanvasRenderingContext2D,
+  path: GeoPath,
+  world: World,
+  graticule: GeoPermissibleObjects,
+) {
   const shape = (geo: GeoPermissibleObjects) => {
     ctx.beginPath()
     path(geo)

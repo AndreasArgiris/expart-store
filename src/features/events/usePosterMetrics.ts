@@ -16,7 +16,10 @@ export function usePosterMetrics() {
   const isMobile = width < BREAKPOINT_LG
   const imgW = isMobile
     ? Math.min(width - MOBILE_GUTTER, MAX_WIDTH)
-    : Math.max(MIN_DESKTOP_WIDTH, Math.min(MAX_WIDTH, width * DESKTOP_WIDTH_SHARE, height * DESKTOP_HEIGHT_SHARE * RATIO))
+    : Math.max(
+        MIN_DESKTOP_WIDTH,
+        Math.min(MAX_WIDTH, width * DESKTOP_WIDTH_SHARE, height * DESKTOP_HEIGHT_SHARE * RATIO),
+      )
   const imgH = imgW / RATIO
   return { isMobile, imgW, imgH, pad: PAD, frameW: imgW + PAD * 2, frameH: imgH + PAD * 2 }
 }

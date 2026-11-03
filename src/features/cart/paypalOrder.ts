@@ -29,4 +29,7 @@ export function toPurchaseUnit(entries: CartEntry[], subtotal: number) {
 }
 
 /** Changes whenever the cart's contents do, so the PayPal button rebuilds its order. */
-export const cartFingerprint = (entries: CartEntry[], subtotal: number) => [subtotal, entries.map((e) => `${e.key}x${e.qty}`).join()]
+export const cartFingerprint = (entries: CartEntry[], subtotal: number) => [
+  subtotal,
+  entries.map((e) => `${e.key}x${e.qty}`).join(),
+]

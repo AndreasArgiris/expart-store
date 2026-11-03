@@ -41,13 +41,42 @@ const BURST_LIFE: Range = [1200, 2100] // ms
 const isHole = (fill: string) => fill !== '#fff' && fill !== 'rgb(255,255,255)'
 
 export function createSplashPool(): Splash[] {
-  return Array.from({ length: SPLASH_MAX }, () => ({ alive: false, x: 0, y: 0, vx: 0, vy: 0, r0: 0, age: 0, life: 1, fill: '#fff' }))
+  return Array.from({ length: SPLASH_MAX }, () => ({
+    alive: false,
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+    r0: 0,
+    age: 0,
+    life: 1,
+    fill: '#fff',
+  }))
 }
 
 /** Starts a droplet in a free slot, or recycles the one closest to evaporating. */
-export function spawnSplash(pool: Splash[], x: number, y: number, angle: number, speed: number, r0: number, life: number, fill: string) {
+export function spawnSplash(
+  pool: Splash[],
+  x: number,
+  y: number,
+  angle: number,
+  speed: number,
+  r0: number,
+  life: number,
+  fill: string,
+) {
   const s = pool.find((p) => !p.alive) ?? pool.reduce((a, b) => (a.age / a.life > b.age / b.life ? a : b))
-  Object.assign(s, { alive: true, x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r0, age: 0, life, fill })
+  Object.assign(s, {
+    alive: true,
+    x,
+    y,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    r0,
+    age: 0,
+    life,
+    fill,
+  })
 }
 
 /** A ring of droplets: how many, their colour in the mask, speed (px/s) and radius (× frame size). */
@@ -66,7 +95,13 @@ export const DRAIN_BURST: Burst = { count: 10, fill: '#000', speed: [120, 300], 
 export const LAND_BURST: Omit<Burst, 'fill'> = { count: 6, speed: [90, 220], radius: [0.012, 0.026] }
 
 /** Throws a ring of droplets out from (x, y) in a frame of `size` px. */
-export function burstSplashes(pool: Splash[], size: number, x: number, y: number, { count, fill, speed, radius }: Burst) {
+export function burstSplashes(
+  pool: Splash[],
+  size: number,
+  x: number,
+  y: number,
+  { count, fill, speed, radius }: Burst,
+) {
   for (let i = 0; i < count; i++) {
     const angle = (i / count) * Math.PI * 2 + rand(-BURST_SCATTER, BURST_SCATTER)
     spawnSplash(pool, x, y, angle, rand(...speed), size * rand(...radius), rand(...BURST_LIFE), fill)

@@ -22,7 +22,9 @@ function useGlobeSize() {
   const { width, height } = useViewport()
   const isDesktop = width >= BREAKPOINT_LG
   return Math.round(
-    isDesktop ? Math.min(DESKTOP_MAX, height * DESKTOP_HEIGHT_SHARE, width * DESKTOP_WIDTH_SHARE) : Math.min(width - MOBILE_GUTTER, MOBILE_MAX),
+    isDesktop
+      ? Math.min(DESKTOP_MAX, height * DESKTOP_HEIGHT_SHARE, width * DESKTOP_WIDTH_SHARE)
+      : Math.min(width - MOBILE_GUTTER, MOBILE_MAX),
   )
 }
 
@@ -54,12 +56,7 @@ export function GlobeSection() {
       </motion.div>
 
       <motion.div className="globe-stage" {...revealOnScroll(0.15)}>
-        <Globe
-          size={size}
-          pins={events}
-          onCenterChange={handleCenterChange}
-          onPinClick={handlePinClick}
-        />
+        <Globe size={size} pins={events} onCenterChange={handleCenterChange} onPinClick={handlePinClick} />
       </motion.div>
 
       <motion.div className="globe-clock" {...revealOnScroll(0.25)}>
@@ -95,9 +92,9 @@ export function GlobeSection() {
       <motion.div className="globe-copy" {...revealOnScroll(0.35)}>
         <Parallax distance={60}>
           <p className="mb-0">
-            Expart travels from city to city, taking its events to places that care about sound as much as we
-            do. Every stop brings its own energy, shaped by local diggers, new crowds and unexpected rooms.
-            Different cities, same crates.
+            Expart travels from city to city, taking its events to places that care about sound as much as we do. Every
+            stop brings its own energy, shaped by local diggers, new crowds and unexpected rooms. Different cities, same
+            crates.
           </p>
         </Parallax>
       </motion.div>

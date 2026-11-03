@@ -52,8 +52,8 @@ export function ContactSection() {
         <motion.div {...revealOnScroll(0.3)}>
           <Parallax distance={60}>
             <p className="contact-copy">
-              Bookings, collaborations, a venue you think we should play, or a record you can't find. Write to
-              us and we'll get back to you.
+              Bookings, collaborations, a venue you think we should play, or a record you can't find. Write to us and
+              we'll get back to you.
             </p>
             <dl className="contact-list">
               <div>

@@ -39,7 +39,14 @@ export function EventStage({ index, metrics, onSelect }: EventStageProps) {
                 key={e.id}
                 type="button"
                 className="event-poster"
-                style={{ width: imgW, height: imgH, marginLeft: -imgW / 2, marginTop: -imgH / 2, zIndex: TOP_Z - dist, cursor: isActive ? 'default' : 'pointer' }}
+                style={{
+                  width: imgW,
+                  height: imgH,
+                  marginLeft: -imgW / 2,
+                  marginTop: -imgH / 2,
+                  zIndex: TOP_Z - dist,
+                  cursor: isActive ? 'default' : 'pointer',
+                }}
                 initial={false}
                 animate={{
                   y: d * (imgH + pad + GAP) + (d > 0 ? META_SPACE : 0),

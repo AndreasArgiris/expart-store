@@ -31,7 +31,14 @@ export function CoverLiquid({ src, alt, size, isRevealed }: CoverLiquidProps) {
   const ids = { goo: `liquid-${id}`, refract: `refract-${id}`, mask: `liquid-mask-${id}` }
   const { els, shownSrc, switchFade, trail, setLead, hoverHandlers } = useCoverLiquid(src, size, isRevealed)
   const pad = size * PADDING
-  const art = { href: shownSrc, x: pad, y: pad, width: size - pad * 2, height: size - pad * 2, preserveAspectRatio: 'xMidYMid slice' }
+  const art = {
+    href: shownSrc,
+    x: pad,
+    y: pad,
+    width: size - pad * 2,
+    height: size - pad * 2,
+    preserveAspectRatio: 'xMidYMid slice',
+  }
 
   return (
     <>

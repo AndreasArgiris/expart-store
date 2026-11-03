@@ -139,10 +139,30 @@ button {
   border: 0 solid var(--ink);
 }
 
-.vmark-tl { top: 30px; left: 16px; border-top-width: 2px; border-left-width: 2px; }
-.vmark-tr { top: 30px; right: 30px; border-top-width: 2px; border-right-width: 2px; }
-.vmark-bl { bottom: 26px; left: 16px; border-bottom-width: 2px; border-left-width: 2px; }
-.vmark-br { bottom: 26px; right: 30px; border-bottom-width: 2px; border-right-width: 2px; }
+.vmark-tl {
+  top: 30px;
+  left: 16px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+.vmark-tr {
+  top: 30px;
+  right: 30px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+.vmark-bl {
+  bottom: 26px;
+  left: 16px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+.vmark-br {
+  bottom: 26px;
+  right: 30px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
 
 .tick {
   top: 50%;
@@ -158,13 +178,31 @@ button {
   background: var(--ink);
 }
 
-.tick::before { top: 0; bottom: 0; width: 1.5px; }
-.tick::after { top: 50%; width: 12px; height: 1.5px; }
+.tick::before {
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+}
+.tick::after {
+  top: 50%;
+  width: 12px;
+  height: 1.5px;
+}
 
-.tick-l { left: 16px; }
-.tick-l::before, .tick-l::after { left: 0; }
-.tick-r { right: 30px; }
-.tick-r::before, .tick-r::after { right: 0; }
+.tick-l {
+  left: 16px;
+}
+.tick-l::before,
+.tick-l::after {
+  left: 0;
+}
+.tick-r {
+  right: 30px;
+}
+.tick-r::before,
+.tick-r::after {
+  right: 0;
+}
 
 /* ---------- Stage ---------- */
 
@@ -199,10 +237,30 @@ button {
   border: 0 solid var(--ink);
 }
 
-.fc-tl { top: -1px; left: -1px; border-top-width: 1.5px; border-left-width: 1.5px; }
-.fc-tr { top: -1px; right: -1px; border-top-width: 1.5px; border-right-width: 1.5px; }
-.fc-bl { bottom: -1px; left: -1px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
-.fc-br { bottom: -1px; right: -1px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+.fc-tl {
+  top: -1px;
+  left: -1px;
+  border-top-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.fc-tr {
+  top: -1px;
+  right: -1px;
+  border-top-width: 1.5px;
+  border-right-width: 1.5px;
+}
+.fc-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.fc-br {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-width: 1.5px;
+  border-right-width: 1.5px;
+}
 
 .track {
   position: absolute;
@@ -262,11 +320,18 @@ button {
   background: none;
   color: var(--ink);
   opacity: 0.85;
-  transition: opacity 0.2s, color 0.2s;
+  transition:
+    opacity 0.2s,
+    color 0.2s;
 }
 
-.ctrl:hover { opacity: 1; }
-.ctrl.on { color: var(--accent); opacity: 1; }
+.ctrl:hover {
+  opacity: 1;
+}
+.ctrl.on {
+  color: var(--accent);
+  opacity: 1;
+}
 
 .text-link {
   padding: 0;
@@ -281,7 +346,9 @@ a.text-link {
   text-decoration: none;
 }
 
-.text-link:hover { color: var(--accent); }
+.text-link:hover {
+  color: var(--accent);
+}
 
 :focus-visible {
   outline: 1.5px solid var(--accent);
@@ -304,9 +371,15 @@ a.text-link {
 }
 
 @media (max-width: 767.98px) {
-  .page { padding: 28px 24px 32px; }
-  .intro { max-width: none; }
-  .pager { order: -1; }
+  .page {
+    padding: 28px 24px 32px;
+  }
+  .intro {
+    max-width: none;
+  }
+  .pager {
+    order: -1;
+  }
 }
 
 /* ---------- Layout shell ---------- */
@@ -323,7 +396,6 @@ a.text-link {
   /* Own GPU layer, so the page slide is composited instead of repainted every frame. */
   will-change: transform, opacity;
 }
-
 
 .min-w-0 {
   min-width: 0;
@@ -354,8 +426,12 @@ a.text-link {
   transition: color 0.25s;
 }
 
-.event-row:hover { color: #777; }
-.event-row.active { color: var(--ink); }
+.event-row:hover {
+  color: #777;
+}
+.event-row.active {
+  color: var(--ink);
+}
 
 .flag {
   flex: none;
@@ -364,7 +440,9 @@ a.text-link {
   transition: opacity 0.25s;
 }
 
-.event-row:not(.active) .flag { opacity: 0.35; }
+.event-row:not(.active) .flag {
+  opacity: 0.35;
+}
 
 .event-frame {
   position: relative;
@@ -574,8 +652,14 @@ a.text-link {
   height: 22px;
 }
 
-.founders-frame .fc-tl { top: -22px; left: -22px; }
-.founders-frame .fc-br { right: -22px; bottom: -22px; }
+.founders-frame .fc-tl {
+  top: -22px;
+  left: -22px;
+}
+.founders-frame .fc-br {
+  right: -22px;
+  bottom: -22px;
+}
 
 .founders-photo img {
   display: block;
@@ -719,7 +803,12 @@ a.text-link {
   position: absolute;
   inset: 0 -42px;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(transparent, #000 var(--reveal-fade), #000 calc(100% - var(--reveal-fade)), transparent);
+  -webkit-mask-image: linear-gradient(
+    transparent,
+    #000 var(--reveal-fade),
+    #000 calc(100% - var(--reveal-fade)),
+    transparent
+  );
   mask-image: linear-gradient(transparent, #000 var(--reveal-fade), #000 calc(100% - var(--reveal-fade)), transparent);
 }
 

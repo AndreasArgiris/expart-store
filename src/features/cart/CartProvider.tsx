@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { CartContext, type CartState } from './cartContext'
-import { addLine, countItems, parseSavedLines, removeLine, setLineQty, subtotalOf, toEntries, type CartLine } from './cartLines'
+import {
+  addLine,
+  countItems,
+  parseSavedLines,
+  removeLine,
+  setLineQty,
+  subtotalOf,
+  toEntries,
+  type CartLine,
+} from './cartLines'
 
 const STORAGE_KEY = 'expart-cart'
 
@@ -25,7 +34,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CartState>(() => {
     const entries = toEntries(lines)
-    return { entries, count: countItems(entries), subtotal: subtotalOf(entries), isOpen, open, close, add, setQty, remove, clear }
+    return {
+      entries,
+      count: countItems(entries),
+      subtotal: subtotalOf(entries),
+      isOpen,
+      open,
+      close,
+      add,
+      setQty,
+      remove,
+      clear,
+    }
   }, [lines, isOpen, open, close, add, setQty, remove, clear])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

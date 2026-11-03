@@ -33,10 +33,9 @@ export function AboutPage() {
             <Parallax distance={70}>
               <p className="mb-0">
                 Expart is an independent art lovers team and event curator that brings unconventional sounds and
-                pioneering artists to unexpected places. We don't sell background music. Every record on our
-                shelves and every night we host is chosen to start a conversation, with your friends or with a
-                stranger. Each event is backed by a carefully picked line-up, and that line-up stays a surprise
-                until the doors open.
+                pioneering artists to unexpected places. We don't sell background music. Every record on our shelves and
+                every night we host is chosen to start a conversation, with your friends or with a stranger. Each event
+                is backed by a carefully picked line-up, and that line-up stays a surprise until the doors open.
               </p>
             </Parallax>
           </motion.div>

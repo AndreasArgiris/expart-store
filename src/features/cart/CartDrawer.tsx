@@ -24,7 +24,13 @@ export function CartDrawer() {
     <>
       <ul className="cart-lines list-unstyled">
         {entries.map((e) => (
-          <CartLineItem key={e.key} entry={e} onQtyChange={cart.setQty} onRemove={cart.remove} onNavigate={handleClose} />
+          <CartLineItem
+            key={e.key}
+            entry={e}
+            onQtyChange={cart.setQty}
+            onRemove={cart.remove}
+            onNavigate={handleClose}
+          />
         ))}
       </ul>
       <footer className="cart-foot">
@@ -40,7 +46,14 @@ export function CartDrawer() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div key="cart" className="cart-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={BACKDROP_FADE}>
+        <motion.div
+          key="cart"
+          className="cart-layer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={BACKDROP_FADE}
+        >
           <div className="cart-backdrop" onClick={handleClose} />
           <motion.aside
             className="cart-drawer"

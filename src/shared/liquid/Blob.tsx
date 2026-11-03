@@ -40,7 +40,18 @@ const TURN_SMOOTHING = 0.15 // share of the turn toward the real heading taken e
 const DEGREES_PER_RADIAN = 180 / Math.PI
 
 /** A droplet that springs after the pointer and stretches along its velocity. Draw several inside a goo filter. */
-export function Blob({ pointerX, pointerY, radius, fill, scale, stiffness, damping, stretch, jumpers, onLead }: BlobProps) {
+export function Blob({
+  pointerX,
+  pointerY,
+  radius,
+  fill,
+  scale,
+  stiffness,
+  damping,
+  stretch,
+  jumpers,
+  onLead,
+}: BlobProps) {
   const ref = useRef<SVGEllipseElement>(null)
   const cx = useSpring(pointerX, { stiffness, damping })
   const cy = useSpring(pointerY, { stiffness, damping })
@@ -96,7 +107,10 @@ export function Blob({ pointerX, pointerY, radius, fill, scale, stiffness, dampi
     el.setAttribute('cy', y.toFixed(2))
     el.setAttribute('rx', (r * k).toFixed(2))
     el.setAttribute('ry', (r / Math.sqrt(k)).toFixed(2))
-    el.setAttribute('transform', `rotate(${(st.angle * DEGREES_PER_RADIAN).toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)})`)
+    el.setAttribute(
+      'transform',
+      `rotate(${(st.angle * DEGREES_PER_RADIAN).toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)})`,
+    )
     el.setAttribute('fill', fill.get())
   })
 

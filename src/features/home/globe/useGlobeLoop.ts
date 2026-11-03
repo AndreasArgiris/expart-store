@@ -39,7 +39,17 @@ function useLatest<T>(value: T) {
 const wrapLongitude = (lon: number) => ((((lon + HALF_TURN * 3) % 360) + 360) % 360) - HALF_TURN
 
 /** Runs the globe's animation loop: eases the spin, draws the globe and pins, and keeps the tooltip on its pin. */
-export function useGlobeLoop({ canvasRef, tooltipRef, world, size, pins, hovered, spin, positions, onCenterChange }: GlobeLoopArgs) {
+export function useGlobeLoop({
+  canvasRef,
+  tooltipRef,
+  world,
+  size,
+  pins,
+  hovered,
+  spin,
+  positions,
+  onCenterChange,
+}: GlobeLoopArgs) {
   const isReducedMotion = useReducedMotion()
   const pinsRef = useLatest(pins)
   const hoveredRef = useLatest(hovered)

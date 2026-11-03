@@ -40,7 +40,12 @@ interface ScrollSpreadQuoteProps {
  * Reads as normal left-aligned text. Scrolling it up the screen glides the words apart into a fully
  * justified block; once open, the spaced words take turns scrambling in red. Scrolling back closes it.
  */
-export function ScrollSpreadQuote({ text, as: Tag = 'h2', className, offset = ['start 90%', 'start 35%'] }: ScrollSpreadQuoteProps) {
+export function ScrollSpreadQuote({
+  text,
+  as: Tag = 'h2',
+  className,
+  offset = ['start 90%', 'start 35%'],
+}: ScrollSpreadQuoteProps) {
   const words = text.split(' ')
   const ref = useRef<HTMLHeadingElement>(null)
   const [layout, setLayout] = useState<SpreadLayout>(() => ({ offsets: words.map(() => 0), spaced: [] }))

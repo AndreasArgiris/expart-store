@@ -21,7 +21,15 @@ export function CopyEmail({ email }: { email: string }) {
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
             transition={{ duration: 0.2 }}
           >
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
               <path d="M2.5 8.5l3.5 3.5 7.5-8" />
             </svg>
             Copied

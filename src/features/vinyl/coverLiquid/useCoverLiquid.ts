@@ -47,7 +47,11 @@ export function useCoverLiquid(src: string, size: number, isRevealed: boolean) {
     return `rgb(${c},${c},${c})`
   })
 
-  const { pointerX, pointerY, hoverRadius, jumpers, isHovering, lastSpawn, hoverHandlers } = useCoverHover(size, splashes, dropletFill)
+  const { pointerX, pointerY, hoverRadius, jumpers, isHovering, lastSpawn, hoverHandlers } = useCoverHover(
+    size,
+    splashes,
+    dropletFill,
+  )
   const clearMask = useCoverFrame({ size, els, pour, splashes, lead, dropletFill, hoverRadius, isHovering, lastSpawn })
   const { shownSrc, switchFade } = useHeldCover(src, isRevealed, pour, coverAlpha, clearMask)
 

@@ -19,14 +19,6 @@ export function Vinyl({ src, alt, size, isSpinning }: VinylProps) {
   })
 
   return (
-    <motion.img
-      src={src}
-      alt={alt}
-      width={size}
-      height={size}
-      draggable={false}
-      className="vinyl"
-      style={{ rotate }}
-    />
+    <motion.img src={src} alt={alt} width={size} height={size} draggable={false} className="vinyl" style={{ rotate }} />
   )
 }

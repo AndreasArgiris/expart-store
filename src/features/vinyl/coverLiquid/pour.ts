@@ -17,7 +17,12 @@ const POOL_START = 0.2 // share of the pour before the main pool starts flooding
 const DROP_DURATION = 0.5 // share of the pour each satellite drop takes to land
 
 /** Draws the pour at progress `p` (0 hidden – 1 fully poured) into the pool and satellite-drop circles. */
-export function drawPour(p: number, size: number, poolEl: SVGCircleElement | null, dropEls: (SVGCircleElement | null)[]) {
+export function drawPour(
+  p: number,
+  size: number,
+  poolEl: SVGCircleElement | null,
+  dropEls: (SVGCircleElement | null)[],
+) {
   const half = size / 2
   const qMain = clamp01((p - POOL_START) / (1 - POOL_START))
   poolEl?.setAttribute('r', (size * POOL * easeInOutCubic(qMain)).toFixed(2))

@@ -52,7 +52,10 @@ export function Flag({ code, className = '' }: { code: FlagCode; className?: str
           <rect y="3.67" width="16" height="3.67" fill="#fff" />
           <rect y="7.33" width="16" height="3.67" fill="#171796" />
           <rect x="6" y="2.6" width="4" height="4.6" fill="#fff" stroke="#ff0000" strokeWidth="0.6" />
-          <path d="M6 2.6h1.33v1.15H6zM8.67 2.6H10v1.15H8.67zM7.33 3.75h1.34v1.15H7.33zM6 4.9h1.33v1.15H6zM8.67 4.9H10v1.15H8.67zM7.33 6.05h1.34V7.2H7.33z" fill="#ff0000" />
+          <path
+            d="M6 2.6h1.33v1.15H6zM8.67 2.6H10v1.15H8.67zM7.33 3.75h1.34v1.15H7.33zM6 4.9h1.33v1.15H6zM8.67 4.9H10v1.15H8.67zM7.33 6.05h1.34V7.2H7.33z"
+            fill="#ff0000"
+          />
         </>
       )}
       {code === 'DE' && (

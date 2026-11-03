@@ -64,7 +64,15 @@ export function LiquidLogo({ width = 125 }: { width?: number }) {
         </mask>
 
         {/* The logo's own shape, so the red only ever fills the letters. */}
-        <mask id={shapeId} maskUnits="userSpaceOnUse" x={0} y={0} width={VB_W} height={VB_H} style={{ maskType: 'alpha' }}>
+        <mask
+          id={shapeId}
+          maskUnits="userSpaceOnUse"
+          x={0}
+          y={0}
+          width={VB_W}
+          height={VB_H}
+          style={{ maskType: 'alpha' }}
+        >
           <image href={LOGO_SRC} width={VB_W} height={VB_H} />
         </mask>
       </defs>

@@ -40,12 +40,7 @@ function App() {
         <FrameMarks />
         <Header page={page} />
 
-        <AnimatePresence
-          mode="wait"
-          custom={direction}
-          initial={false}
-          onExitComplete={handleExitComplete}
-        >
+        <AnimatePresence mode="wait" custom={direction} initial={false} onExitComplete={handleExitComplete}>
           <motion.div
             key={key}
             className="page-body"

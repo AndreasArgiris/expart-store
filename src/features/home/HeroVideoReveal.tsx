@@ -57,7 +57,15 @@ function RevealLayer() {
       <video ref={videoRef} src={VIDEO_SRC} muted loop playsInline preload="auto" />
       <svg>
         <defs>
-          <filter id={gooId} filterUnits="userSpaceOnUse" x="-25%" y="-25%" width="150%" height="150%" colorInterpolationFilters="sRGB">
+          <filter
+            id={gooId}
+            filterUnits="userSpaceOnUse"
+            x="-25%"
+            y="-25%"
+            width="150%"
+            height="150%"
+            colorInterpolationFilters="sRGB"
+          >
             <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves={1} seed={4} result="noise" />
             <feGaussianBlur in="SourceGraphic" stdDeviation={GOO_BLUR} result="blur" />
             <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />

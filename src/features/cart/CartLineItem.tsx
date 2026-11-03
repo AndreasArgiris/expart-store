@@ -32,7 +32,12 @@ export function CartLineItem({ entry: e, onQtyChange, onRemove, onNavigate }: Ca
           </button>
         </div>
       </div>
-      <button type="button" className="cart-remove" onClick={() => onRemove(e.key)} aria-label={`Remove ${e.product.name}`}>
+      <button
+        type="button"
+        className="cart-remove"
+        onClick={() => onRemove(e.key)}
+        aria-label={`Remove ${e.product.name}`}
+      >
         ×
       </button>
     </li>
