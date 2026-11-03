@@ -1,9 +1,7 @@
-import { useRef, type PointerEvent } from 'react'
-import { animate, useMotionValue } from 'motion/react'
-import { Blob } from '../shared/liquid/Blob'
-import { EASE_IN_OUT } from '../shared/motion'
+import { Blob, type TrailDrop } from '../shared/liquid/Blob'
 import { ACCENT } from '../shared/theme'
 import { useSvgId } from '../shared/hooks/useSvgId'
+import { useLogoLiquid } from './useLogoLiquid'
 
 const LOGO_SRC = '/media/logo.svg'
 // Native size of logo.svg's viewBox; everything below is in these units.
@@ -11,7 +9,7 @@ const VB_W = 438.038
 const VB_H = 274.481
 // Lead blob radius (viewBox units) and its trailing droplets.
 const SPOT = 78
-const TRAIL = [
+const TRAIL: TrailDrop[] = [
   { scale: 1, stiffness: 200, damping: 18, stretch: 0.8 },
   { scale: 0.72, stiffness: 120, damping: 15, stretch: 0.6 },
   { scale: 0.52, stiffness: 78, damping: 13, stretch: 0.45 },
@@ -28,17 +26,7 @@ export function LiquidLogo({ width = 125 }: { width?: number }) {
   const liquidId = `logo-liquid-${id}`
   const shapeId = `logo-shape-${id}`
 
-  const pointerX = useMotionValue(VB_W / 2)
-  const pointerY = useMotionValue(VB_H / 2)
-  const radius = useMotionValue(0)
-  const fill = useMotionValue('#fff')
-  const jumpers = useRef(new Set<() => void>())
-
-  const moveTo = (e: PointerEvent<SVGSVGElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    pointerX.set(((e.clientX - rect.left) / rect.width) * VB_W)
-    pointerY.set(((e.clientY - rect.top) / rect.height) * VB_H)
-  }
+  const { trail, handlers } = useLogoLiquid(VB_W, VB_H, SPOT)
 
   return (
     <svg
@@ -48,18 +36,7 @@ export function LiquidLogo({ width = 125 }: { width?: number }) {
       height={(width * VB_H) / VB_W}
       role="img"
       aria-label="Expart"
-      onPointerEnter={(e) => {
-        if (e.pointerType !== 'mouse') return
-        moveTo(e)
-        jumpers.current.forEach((jump) => jump())
-        animate(radius, SPOT, { type: 'spring', stiffness: 170, damping: 12 })
-      }}
-      onPointerMove={(e) => e.pointerType === 'mouse' && moveTo(e)}
-      onPointerLeave={(e) => {
-        if (e.pointerType !== 'mouse') return
-        moveTo(e)
-        animate(radius, 0, { duration: 0.7, ease: EASE_IN_OUT })
-      }}
+      {...handlers}
     >
       <defs>
         <filter
@@ -80,8 +57,8 @@ export function LiquidLogo({ width = 125 }: { width?: number }) {
         {/* Where the liquid is. */}
         <mask id={liquidId} maskUnits="userSpaceOnUse" x={0} y={0} width={VB_W} height={VB_H}>
           <g filter={`url(#${gooId})`}>
-            {TRAIL.map((t, i) => (
-              <Blob key={i} pointerX={pointerX} pointerY={pointerY} radius={radius} fill={fill} jumpers={jumpers} {...t} />
+            {TRAIL.map((t) => (
+              <Blob key={t.scale} {...trail} {...t} />
             ))}
           </g>
         </mask>

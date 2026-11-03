@@ -1,4 +1,4 @@
-import { pageHref } from '../../../shared/hooks/usePage'
+import { pageHref } from '../../../shared/hooks/useRoute'
 import { ProductCard } from '../ProductCard'
 import { merch } from '../merch'
 

@@ -1,52 +1,47 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { motion } from 'motion/react'
 import { events } from '../events/events'
-import { pageHref } from '../../shared/hooks/usePage'
+import { pageHref } from '../../shared/hooks/useRoute'
 import { useViewport } from '../../shared/hooks/useViewport'
 import { Globe } from './globe/Globe'
+import { formatCoord, formatTime, formatZone } from './globe/readout'
+import { useClock } from './globe/useClock'
 import { Parallax } from '../../shared/components/Parallax'
-import { ScrollSpreadQuote } from '../../shared/components/ScrollSpreadQuote'
+import { ScrollSpreadQuote } from '../../shared/quote/ScrollSpreadQuote'
 import { revealOnScroll } from '../../shared/motion'
 import { BREAKPOINT_LG } from '../../shared/theme'
 
-const formatTime = (d: Date) =>
-  d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+// Globe size: big beside the copy on desktop, nearly full-width on mobile.
+const DESKTOP_MAX = 720
+const DESKTOP_HEIGHT_SHARE = 0.8
+const DESKTOP_WIDTH_SHARE = 0.42
+const MOBILE_GUTTER = 48
+const MOBILE_MAX = 520
 
-function formatZone(d: Date) {
-  const minutes = -d.getTimezoneOffset()
-  const sign = minutes >= 0 ? '+' : '-'
-  const h = Math.floor(Math.abs(minutes) / 60)
-  const m = Math.abs(minutes) % 60
-  const offset = `${sign}${h}${m ? `:${String(m).padStart(2, '0')}` : ''}`
-  return `GMT${offset} (UTC${offset})`
-}
-
-const formatCoord = (value: number, pos: string, neg: string) =>
-  `${Math.abs(value).toFixed(4)}° ${value >= 0 ? pos : neg}`
-
-function useClock() {
-  const [now, setNow] = useState(() => new Date())
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000)
-    return () => clearInterval(id)
-  }, [])
-  return now
-}
-
-export function GlobeSection() {
+function useGlobeSize() {
   const { width, height } = useViewport()
+  const isDesktop = width >= BREAKPOINT_LG
+  return Math.round(
+    isDesktop ? Math.min(DESKTOP_MAX, height * DESKTOP_HEIGHT_SHARE, width * DESKTOP_WIDTH_SHARE) : Math.min(width - MOBILE_GUTTER, MOBILE_MAX),
+  )
+}
+
+/** Home's second screen: the events globe with a scroll-spread title, local clock and live coordinates. */
+export function GlobeSection() {
+  const size = useGlobeSize()
   const now = useClock()
   const latRef = useRef<HTMLElement>(null)
   const lonRef = useRef<HTMLElement>(null)
 
-  const desktop = width >= BREAKPOINT_LG
-  const size = Math.round(desktop ? Math.min(720, height * 0.8, width * 0.42) : Math.min(width - 48, 520))
-
   // Written straight to the DOM: this fires every animation frame.
-  const onCenterChange = useCallback((lon: number, lat: number) => {
+  const handleCenterChange = useCallback((lon: number, lat: number) => {
     if (latRef.current) latRef.current.textContent = formatCoord(lat, 'N', 'S')
     if (lonRef.current) lonRef.current.textContent = formatCoord(lon, 'E', 'W')
   }, [])
+
+  const handlePinClick = () => {
+    window.location.hash = pageHref.events
+  }
 
   return (
     <section className="globe-section" aria-labelledby="globe-title">
@@ -62,8 +57,8 @@ export function GlobeSection() {
         <Globe
           size={size}
           pins={events}
-          onCenterChange={onCenterChange}
-          onPinClick={() => (window.location.hash = pageHref.events)}
+          onCenterChange={handleCenterChange}
+          onPinClick={handlePinClick}
         />
       </motion.div>
 

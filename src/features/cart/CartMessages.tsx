@@ -1,4 +1,4 @@
-import { pageHref } from '../../shared/hooks/usePage'
+import { pageHref } from '../../shared/hooks/useRoute'
 
 /** Shown after a successful payment. */
 export function CartThanks({ orderId }: { orderId: string }) {

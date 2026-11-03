@@ -49,11 +49,11 @@ function Cap({ w }: { w: number }) {
 }
 
 function FaderTrack({ fader: f, index }: { fader: Fader; index: number }) {
-  const reduced = useReducedMotion()
+  const isReducedMotion = useReducedMotion()
   const y = useMotionValue(f.top)
 
   useEffect(() => {
-    if (reduced) return
+    if (isReducedMotion) return
     const controls = animate(y, f.stops, {
       duration: f.duration,
       ease: 'easeInOut',
@@ -61,7 +61,7 @@ function FaderTrack({ fader: f, index }: { fader: Fader; index: number }) {
       delay: index * 0.18,
     })
     return () => controls.stop()
-  }, [reduced, y, f, index])
+  }, [isReducedMotion, y, f, index])
 
   return (
     <g>
@@ -80,7 +80,7 @@ export function PickupCursors({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label="Mixer faders">
       {FADERS.map((f, i) => (
-        <FaderTrack key={i} fader={f} index={i} />
+        <FaderTrack key={f.trackX} fader={f} index={i} />
       ))}
     </svg>
   )

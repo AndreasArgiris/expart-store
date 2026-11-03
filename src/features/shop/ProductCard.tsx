@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { formatPrice, type MerchProduct } from './merch'
-import { productHref } from '../../shared/hooks/usePage'
+import { productHref } from '../../shared/hooks/useRoute'
 import { ColorSwatches } from './ColorSwatches'
 import { EASE_OUT } from '../../shared/motion'
 

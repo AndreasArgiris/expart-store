@@ -1,4 +1,4 @@
-import { productHref } from '../../shared/hooks/usePage'
+import { productHref } from '../../shared/hooks/useRoute'
 import { formatPrice } from '../shop/merch'
 import type { CartEntry } from './cartLines'
 

@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, type RefObject } from 'react'
 import { useCart } from '../features/cart/cartContext'
 import { events } from '../features/events/events'
 import { releases } from '../features/vinyl/releases'
-import { pageHref, type Page } from '../shared/hooks/usePage'
+import { pageHref, type Page } from '../shared/hooks/useRoute'
 import { useScramble } from '../shared/hooks/useScramble'
 import { LiquidLogo } from './LiquidLogo'
 
@@ -13,7 +13,7 @@ interface NavItem {
   count?: number
   page?: NavPage
   /** Opens the cart drawer instead of navigating. */
-  cart?: boolean
+  isCart?: boolean
 }
 
 const NAV: NavItem[] = [
@@ -21,25 +21,25 @@ const NAV: NavItem[] = [
   { label: 'Shop', page: 'shop' },
   { label: 'Vinyls', count: releases.length, page: 'vinyl' },
   { label: 'About', page: 'about' },
-  { label: 'Cart', cart: true },
+  { label: 'Cart', isCart: true },
 ]
 
-function NavLink({ item, active }: { item: NavItem; active: boolean }) {
+function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
   const { count: cartCount, open: openCart } = useCart()
-  const count = item.cart ? cartCount : item.count
+  const count = item.isCart ? cartCount : item.count
   const label = count !== undefined ? `${item.label} [${count}]` : item.label
   const { text, scramble } = useScramble(label)
 
   return (
     <a
       href={item.page ? pageHref[item.page] : '#'}
-      className={`sq-link nav-link-scramble fw-bold${active ? ' active' : ''}`}
-      aria-current={active ? 'page' : undefined}
+      className={`sq-link nav-link-scramble fw-bold${isActive ? ' active' : ''}`}
+      aria-current={isActive ? 'page' : undefined}
       aria-label={label}
       onPointerEnter={scramble}
       onFocus={scramble}
       onClick={
-        item.cart
+        item.isCart
           ? (e) => {
               e.preventDefault()
               openCart()
@@ -74,6 +74,7 @@ function useNavInset(navRef: RefObject<HTMLElement | null>) {
   }, [navRef])
 }
 
+/** Logo (home link) and the main nav; nav labels scramble on hover, and Cart opens the drawer. */
 export function Header({ page }: { page: Page }) {
   const navRef = useRef<HTMLElement>(null)
   useNavInset(navRef)
@@ -90,7 +91,7 @@ export function Header({ page }: { page: Page }) {
         <ul className="site-nav list-unstyled mb-0">
           {NAV.map((item) => (
             <li key={item.label}>
-              <NavLink item={item} active={item.page === page || (item.page === 'shop' && page === 'product')} />
+              <NavLink item={item} isActive={item.page === page || (item.page === 'shop' && page === 'product')} />
             </li>
           ))}
         </ul>

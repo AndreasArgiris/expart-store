@@ -1,32 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-
-const SHOW_MS = 2000
+import { useCopyToClipboard } from './useCopyToClipboard'
 
 /** Email address that copies itself on click, with a brief "Copied ✓" note beside it. */
 export function CopyEmail({ email }: { email: string }) {
-  // Bumped on every copy, so repeated clicks restart the note.
-  const [copiedAt, setCopiedAt] = useState(0)
-  const timer = useRef(0)
-
-  useEffect(() => () => clearTimeout(timer.current), [])
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(email)
-    } catch {
-      // Clipboard blocked (e.g. insecure context): fall back to a hidden textarea.
-      const field = document.createElement('textarea')
-      field.value = email
-      document.body.append(field)
-      field.select()
-      document.execCommand('copy')
-      field.remove()
-    }
-    setCopiedAt(Date.now())
-    clearTimeout(timer.current)
-    timer.current = window.setTimeout(() => setCopiedAt(0), SHOW_MS)
-  }
+  const { copiedAt, copy } = useCopyToClipboard(email)
 
   return (
     <span className="copy-email">

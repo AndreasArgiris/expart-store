@@ -3,7 +3,7 @@ import { ConceptStrip } from './ConceptStrip'
 import { ContactSection } from '../contact/ContactSection'
 import { FoundersSection } from './FoundersSection'
 import { Parallax } from '../../shared/components/Parallax'
-import { SpacedQuote } from '../../shared/components/SpacedQuote'
+import { SpacedQuote } from '../../shared/quote/SpacedQuote'
 import { rise } from '../../shared/motion'
 
 const QUOTE = 'Digging deeper through vinyl, sound & human connection'

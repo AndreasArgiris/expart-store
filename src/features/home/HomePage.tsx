@@ -4,7 +4,7 @@ import { GlobeSection } from './GlobeSection'
 import { HeroVideoReveal } from './HeroVideoReveal'
 import { Parallax } from '../../shared/components/Parallax'
 import { formatEventDate, nextEvent } from '../events/events'
-import { pageHref } from '../../shared/hooks/usePage'
+import { pageHref } from '../../shared/hooks/useRoute'
 import { EASE_OUT, rise } from '../../shared/motion'
 
 

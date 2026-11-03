@@ -1,75 +1,19 @@
-import { useRef, useState } from 'react'
-import { motion, useInView, useScroll, useSpring, useTransform } from 'motion/react'
-import { Flag, type FlagCode } from '../../shared/components/Flag'
+import { useRef } from 'react'
+import { motion, useScroll, useSpring, useTransform } from 'motion/react'
 import { Parallax } from '../../shared/components/Parallax'
-import { QuoteWord } from '../../shared/components/SpacedQuote'
 import { revealOnScroll } from '../../shared/motion'
+import { FounderCard } from './FounderCard'
+import { FOUNDERS, FOUNDERS_PHOTO, TEAM_SIZE } from './founders'
 
-interface Founder {
-  name: string
-  /** Where they stand in founders.webp. */
-  position: string
-  role: string
-  age: number
-  /** Hometown, if any; the country is shown as a flag. */
-  city?: string
-  country: string
-  flag: FlagCode
-  bio: string
-}
-
-const FOUNDERS: Founder[] = [
-  {
-    name: 'Andreas Duster',
-    position: 'Left',
-    role: 'Producer & composer',
-    age: 34,
-    city: 'Piraeus',
-    country: 'Greece',
-    flag: 'GR',
-    bio: 'A producer and composer, always seeking new, talented artists to join the team.',
-  },
-  {
-    name: 'John Chele',
-    position: 'Right',
-    role: 'Event organizer & merch promoter',
-    age: 33,
-    city: 'Newry',
-    country: 'Northern Ireland',
-    flag: 'IE',
-    bio: "Organizes Expart's events and promotes its merch.",
-  },
-]
-
-const TEAM_SIZE = 34
-
-/** Founder name that runs the red digit scramble every time it scrolls into view. */
-function ScrambleName({ name }: { name: string }) {
-  const ref = useRef<HTMLHeadingElement>(null)
-  const inView = useInView(ref, { amount: 0.8 })
-  // Bump the pulse on each entry into view (state-during-render pattern, no effect needed).
-  const [seen, setSeen] = useState({ inView, pulse: 0 })
-  if (seen.inView !== inView) setSeen({ inView, pulse: inView ? seen.pulse + 1 : seen.pulse })
-  const { pulse } = seen
-
-  return (
-    <h3 ref={ref} className="founder-name" aria-label={name}>
-      {name.split(' ').map((word, i) => (
-        <span key={i}>
-          {i > 0 && ' '}
-          <QuoteWord word={word} pulse={pulse} />
-        </span>
-      ))}
-    </h3>
-  )
-}
+const PHOTO_DRIFT = 20 // px parallax, less than the text so the photo feels further back
+const COUNT_SPRING = { stiffness: 90, damping: 24 }
 
 /** Team size that counts up from 0 as the block scrolls into view (and back down on the way out). */
 function TeamCount() {
   const ref = useRef<HTMLSpanElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center 55%'] })
   const raw = useTransform(scrollYProgress, [0, 1], [0, TEAM_SIZE])
-  const smooth = useSpring(raw, { stiffness: 90, damping: 24 })
+  const smooth = useSpring(raw, COUNT_SPRING)
   const count = useTransform(smooth, (v) => Math.round(v))
 
   return (
@@ -79,38 +23,7 @@ function TeamCount() {
   )
 }
 
-function FounderCard({ founder, index }: { founder: Founder; index: number }) {
-  return (
-    <motion.div className="founder" {...revealOnScroll(0.25 + index * 0.1)}>
-      <Parallax distance={40}>
-        <div className="founder-index">
-          [{String(index + 1).padStart(2, '0')}] {founder.position}
-        </div>
-        <ScrambleName name={founder.name} />
-        <dl className="founder-facts">
-          <div>
-            <dt>Role</dt>
-            <dd>{founder.role}</dd>
-          </div>
-          <div>
-            <dt>Age</dt>
-            <dd>{founder.age}</dd>
-          </div>
-          <div>
-            <dt>From</dt>
-            <dd className="founder-from">
-              <Flag code={founder.flag} className="founder-flag" />
-              <span className="visually-hidden">{founder.country}</span>
-              {founder.city}
-            </dd>
-          </div>
-        </dl>
-        <p className="founder-bio mb-0">{founder.bio}</p>
-      </Parallax>
-    </motion.div>
-  )
-}
-
+/** About page: the founders' photo, the team count, and a card per founder. */
 export function FoundersSection() {
   return (
     <section className="founders" aria-labelledby="founders-title">
@@ -124,15 +37,13 @@ export function FoundersSection() {
 
       <div className="row g-0 align-items-center founders-grid">
         <motion.div className="col-12 col-lg-5 founders-photo" {...revealOnScroll(0.1)}>
-          <Parallax distance={20}>
+          <Parallax distance={PHOTO_DRIFT}>
             <div className="founders-frame">
               <span className="fc fc-tl" />
               <span className="fc fc-br" />
               <img
-                src="/media/founders.webp"
+                {...FOUNDERS_PHOTO}
                 alt={`${FOUNDERS[0].name} (left) and ${FOUNDERS[1].name} (right)`}
-                width={1254}
-                height={1254}
                 draggable={false}
               />
             </div>

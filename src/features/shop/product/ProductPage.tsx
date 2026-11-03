@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { Parallax } from '../../../shared/components/Parallax'
-import { pageHref } from '../../../shared/hooks/usePage'
+import { pageHref } from '../../../shared/hooks/useRoute'
 import { rise } from '../../../shared/motion'
 import { findProduct, type MerchProduct } from '../merch'
 import { ProductBuyBox } from './ProductBuyBox'

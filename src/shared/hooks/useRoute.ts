@@ -22,7 +22,8 @@ export const productHref = (slug: string, color?: string) => `#/shop/${slug}${co
 /** Pages taller than the screen; every other page is locked to one viewport on desktop. */
 export const scrollingPages: ReadonlySet<Page> = new Set(['home', 'about', 'shop', 'product'])
 
-function routeFromHash(hash: string): Route {
+/** Parses `#/shop/<slug>/<color>`-style hashes into a route; anything unknown is home. */
+export function routeFromHash(hash: string): Route {
   const [first, slug, color] = hash.replace(/^#\/?/, '').split('/')
   if (first === 'events') return { page: 'events' }
   if (first === 'about') return { page: 'about' }
