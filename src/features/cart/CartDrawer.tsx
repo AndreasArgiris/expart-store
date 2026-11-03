@@ -1,127 +1,67 @@
-import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { formatPrice } from '../shop/merch'
-import { productHref } from '../../shared/hooks/usePage'
-import { useCart } from './cartContext'
-import { PayPalCheckout } from './PayPalCheckout'
-import { EASE_OUT } from '../../shared/motion'
 import { CornerMarks } from '../../shared/components/CornerMarks'
+import { EASE_OUT } from '../../shared/motion'
+import { formatPrice } from '../shop/merch'
+import { CartLineItem } from './CartLineItem'
+import { CartEmpty, CartThanks } from './CartMessages'
+import { PayPalCheckout } from './PayPalCheckout'
+import { useCartDrawer } from './useCartDrawer'
 
+const BACKDROP_FADE = { duration: 0.25 }
+const SLIDE_IN = { duration: 0.45, ease: EASE_OUT }
+const OFFSCREEN = '105%' // just past the right edge, so the drawer's shadow is hidden too
 
+/** Slide-in cart: the lines with quantity controls, the subtotal and PayPal checkout, or a thank-you once paid. */
 export function CartDrawer() {
-  const { entries, count, subtotal, isOpen, close, setQty, remove, clear } = useCart()
-  const [paidOrder, setPaidOrder] = useState<string | null>(null)
+  const cart = useCartDrawer()
+  const { entries, isOpen, paidOrderId, handleClose } = cart
 
-  // Escape closes; the page behind doesn't scroll while the drawer is open.
-  useEffect(() => {
-    if (!isOpen) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && close()
-    window.addEventListener('keydown', onKey)
-    const { overflow } = document.body.style
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = overflow
-    }
-  }, [isOpen, close])
-
-  const closeDrawer = () => {
-    close()
-    setPaidOrder(null)
-  }
+  const body = paidOrderId ? (
+    <CartThanks orderId={paidOrderId} />
+  ) : entries.length === 0 ? (
+    <CartEmpty onNavigate={handleClose} />
+  ) : (
+    <>
+      <ul className="cart-lines list-unstyled">
+        {entries.map((e) => (
+          <CartLineItem key={e.key} entry={e} onQtyChange={cart.setQty} onRemove={cart.remove} onNavigate={handleClose} />
+        ))}
+      </ul>
+      <footer className="cart-foot">
+        <div className="cart-subtotal">
+          <span className="fw-bold">Subtotal</span>
+          <span className="fw-bold">{formatPrice(cart.subtotal)}</span>
+        </div>
+        <PayPalCheckout entries={entries} subtotal={cart.subtotal} onPaid={cart.handlePaid} />
+      </footer>
+    </>
+  )
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          key="cart"
-          className="cart-layer"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          <div className="cart-backdrop" onClick={closeDrawer} />
+        <motion.div key="cart" className="cart-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={BACKDROP_FADE}>
+          <div className="cart-backdrop" onClick={handleClose} />
           <motion.aside
             className="cart-drawer"
             role="dialog"
             aria-modal="true"
             aria-label="Cart"
-            initial={{ x: '105%' }}
+            initial={{ x: OFFSCREEN }}
             animate={{ x: 0 }}
-            exit={{ x: '105%' }}
-            transition={{ duration: 0.45, ease: EASE_OUT }}
+            exit={{ x: OFFSCREEN }}
+            transition={SLIDE_IN}
           >
             <CornerMarks />
-
             <header className="cart-head">
               <span className="cart-tab sq-label">
-                Cart <span className="cart-tab-count">({count} items)</span>
+                Cart <span className="cart-tab-count">({cart.count} items)</span>
               </span>
-              <button type="button" className="cart-close" onClick={closeDrawer} aria-label="Close cart">
+              <button type="button" className="cart-close" onClick={handleClose} aria-label="Close cart">
                 ×
               </button>
             </header>
-
-            {paidOrder ? (
-              <div className="cart-empty">
-                <p className="cart-thanks">Thank you!</p>
-                <p>Your payment went through. Order {paidOrder}.</p>
-                <p className="text-secondary">PayPal will email you a receipt.</p>
-              </div>
-            ) : entries.length === 0 ? (
-              <div className="cart-empty">
-                <p>Your cart is empty.</p>
-                <a className="text-link" href="#/shop" onClick={closeDrawer}>
-                  Go to the shop ↳
-                </a>
-              </div>
-            ) : (
-              <>
-                <ul className="cart-lines list-unstyled">
-                  {entries.map((e) => (
-                    <li key={e.key} className="cart-line">
-                      <a href={productHref(e.product.slug, e.color)} onClick={closeDrawer} className="cart-thumb">
-                        <img src={e.colorInfo.image} alt="" />
-                      </a>
-                      <div className="cart-line-info">
-                        <div className="fw-bold">{e.product.name}</div>
-                        {e.product.colors.length > 1 && <div className="text-secondary">Color: {e.colorInfo.name}</div>}
-                        {e.size && <div className="text-secondary">Size: {e.size}</div>}
-                        <div className="mt-1">{formatPrice(e.product.price)}</div>
-                        <div className="cart-qty">
-                          <button type="button" onClick={() => setQty(e.key, e.qty - 1)} aria-label="One less">
-                            −
-                          </button>
-                          <span aria-live="polite">{e.qty}</span>
-                          <button type="button" onClick={() => setQty(e.key, e.qty + 1)} aria-label="One more">
-                            +
-                          </button>
-                        </div>
-                      </div>
-                      <button type="button" className="cart-remove" onClick={() => remove(e.key)} aria-label={`Remove ${e.product.name}`}>
-                        ×
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <footer className="cart-foot">
-                  <div className="cart-subtotal">
-                    <span className="fw-bold">Subtotal</span>
-                    <span className="fw-bold">{formatPrice(subtotal)}</span>
-                  </div>
-                  <PayPalCheckout
-                    entries={entries}
-                    subtotal={subtotal}
-                    onPaid={(id) => {
-                      setPaidOrder(id)
-                      clear()
-                    }}
-                  />
-                </footer>
-              </>
-            )}
+            {body}
           </motion.aside>
         </motion.div>
       )}
