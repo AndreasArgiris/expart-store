@@ -1,5 +1,5 @@
 interface PlayerControlsProps {
-  playing: boolean
+  isPlaying: boolean
   onPrev: () => void
   onTogglePlay: () => void
   onNext: () => void
@@ -7,7 +7,7 @@ interface PlayerControlsProps {
 
 const icon = { width: 13, height: 13, viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6 }
 
-export function PlayerControls({ playing, onPrev, onTogglePlay, onNext }: PlayerControlsProps) {
+export function PlayerControls({ isPlaying, onPrev, onTogglePlay, onNext }: PlayerControlsProps) {
   return (
     <div className="d-flex align-items-center gap-3 pb-2">
       <button type="button" className="ctrl" onClick={onPrev} aria-label="Previous track">
@@ -15,9 +15,9 @@ export function PlayerControls({ playing, onPrev, onTogglePlay, onNext }: Player
           <path d="M8 4 4 8l4 4M13 4 9 8l4 4" />
         </svg>
       </button>
-      <button type="button" className="ctrl" onClick={onTogglePlay} aria-label={playing ? 'Pause' : 'Play'}>
+      <button type="button" className="ctrl" onClick={onTogglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
         <svg {...icon}>
-          {playing ? <path d="M5.5 3v10M10.5 3v10" /> : <path d="M5 3v10l8-5z" fill="currentColor" />}
+          {isPlaying ? <path d="M5.5 3v10M10.5 3v10" /> : <path d="M5 3v10l8-5z" fill="currentColor" />}
         </svg>
       </button>
       <button type="button" className="ctrl" onClick={onNext} aria-label="Next track">

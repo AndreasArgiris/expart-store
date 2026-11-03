@@ -7,15 +7,15 @@ interface VinylProps {
   src: string
   alt: string
   size: number
-  spinning: boolean
+  isSpinning: boolean
 }
 
 /** Record image that spins while playing and keeps its angle when paused. */
-export function Vinyl({ src, alt, size, spinning }: VinylProps) {
+export function Vinyl({ src, alt, size, isSpinning }: VinylProps) {
   const rotate = useMotionValue(0)
 
   useAnimationFrame((_, delta) => {
-    if (spinning) rotate.set((rotate.get() + delta * DEG_PER_MS) % 360)
+    if (isSpinning) rotate.set((rotate.get() + delta * DEG_PER_MS) % 360)
   })
 
   return (

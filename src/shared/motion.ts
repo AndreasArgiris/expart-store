@@ -11,6 +11,20 @@ const RISE_DISTANCE = 20 // px a block travels up as it fades in
 const REVEAL_DISTANCE = 24 // px, a touch more for blocks revealed mid-scroll
 const REVEAL_VISIBLE = 0.3 // share of a block that must be on screen before it reveals
 
+const SWAP_DISTANCE = 6 // px
+const SWAP_DURATION = 0.3 // s
+
+/**
+ * Spread onto a keyed `motion.*` element inside `<AnimatePresence mode="wait">`: the old content lifts out
+ * and the new content rises in, for small text that swaps as a carousel moves.
+ */
+export const swapFade = {
+  initial: { opacity: 0, y: SWAP_DISTANCE },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -SWAP_DISTANCE },
+  transition: { duration: SWAP_DURATION },
+}
+
 /** Spread onto a `motion.*` element: fades and rises into place when the page loads. */
 export const rise = (delay: number) => ({
   initial: { opacity: 0, y: RISE_DISTANCE },

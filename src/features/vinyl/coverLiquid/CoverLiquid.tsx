@@ -17,7 +17,7 @@ interface CoverLiquidProps {
   src: string
   alt: string
   size: number
-  showInfo: boolean
+  isRevealed: boolean
 }
 
 /**
@@ -26,12 +26,12 @@ interface CoverLiquidProps {
  * hiding drains it back; hovering drags a small wobbling droplet trail that flings off splashes,
  * revealing the cover or, when it's shown, cutting through it to the vinyl.
  */
-export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
+export function CoverLiquid({ src, alt, size, isRevealed }: CoverLiquidProps) {
   const id = useSvgId()
   const ids = { goo: `liquid-${id}`, refract: `refract-${id}`, mask: `liquid-mask-${id}` }
-  const liquid = useCoverLiquid(src, size, showInfo)
+  const { els, shownSrc, switchFade, trail, setLead, hoverHandlers } = useCoverLiquid(src, size, isRevealed)
   const pad = size * PADDING
-  const art = { href: liquid.shownSrc, x: pad, y: pad, width: size - pad * 2, height: size - pad * 2, preserveAspectRatio: 'xMidYMid slice' }
+  const art = { href: shownSrc, x: pad, y: pad, width: size - pad * 2, height: size - pad * 2, preserveAspectRatio: 'xMidYMid slice' }
 
   return (
     <>
@@ -40,12 +40,12 @@ export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
         viewBox={`0 0 ${size} ${size}`}
         role="img"
         aria-label={alt}
-        aria-hidden={!showInfo}
-        style={{ opacity: liquid.switchFade }}
+        aria-hidden={!isRevealed}
+        style={{ opacity: switchFade }}
       >
-        <CoverLiquidDefs ids={ids} size={size} els={liquid.els}>
+        <CoverLiquidDefs ids={ids} size={size} els={els}>
           {TRAIL.map((t, i) => (
-            <Blob key={t.scale} {...liquid.trail} {...t} onLead={i === 0 ? liquid.setLead : undefined} />
+            <Blob key={t.scale} {...trail} {...t} onLead={i === 0 ? setLead : undefined} />
           ))}
         </CoverLiquidDefs>
 
@@ -54,14 +54,14 @@ export function CoverLiquid({ src, alt, size, showInfo }: CoverLiquidProps) {
           <image {...art} filter={`url(#${ids.refract})`} />
         </g>
 
-        <g ref={liquid.els.clean} opacity={0}>
+        <g ref={els.clean} opacity={0}>
           <rect width={size} height={size} fill="#fff" />
           <image {...art} />
         </g>
       </motion.svg>
 
       {/* Separate hit area: neighbour discs are DOM children of the frame but sit outside it. */}
-      <div className="hover-zone" {...liquid.hoverHandlers} />
+      <div className="hover-zone" {...hoverHandlers} />
     </>
   )
 }

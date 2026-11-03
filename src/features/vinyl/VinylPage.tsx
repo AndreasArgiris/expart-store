@@ -1,68 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { releases } from './releases'
 import { ReleaseStage } from './ReleaseStage'
+import { useVinylPlayer } from './useVinylPlayer'
 
-const count = releases.length
-const wrap = (i: number) => ((i % count) + count) % count
+const PAGER_SLIDE = 12 // px the page number slides as it changes
+const PAGER_DURATION = 0.3 // s
 
+/** Vinyl: a turntable carousel of releases with previews, an intro, and a pager. */
 export function VinylPage() {
-  const [index, setIndex] = useState(0)
-  const [playing, setPlaying] = useState(false)
-  const [showInfo, setShowInfo] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
-
-  const select = useCallback((i: number) => {
-    setIndex(wrap(i))
-    setShowInfo(false)
-  }, [])
-
-  const step = useCallback((delta: number) => {
-    setIndex((i) => wrap(i + delta))
-    setShowInfo(false)
-  }, [])
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-    if (playing) {
-      audio.play().catch((err: DOMException) => {
-        // AbortError just means the source changed mid-load.
-        if (err.name !== 'AbortError') setPlaying(false)
-      })
-    } else {
-      audio.pause()
-    }
-  }, [playing, index])
-
-  // Warm the neighbouring covers so revealing one after stepping doesn't wait on the network.
-  useEffect(() => {
-    for (const i of [index - 1, index + 1]) new Image().src = releases[wrap(i)].cover
-  }, [index])
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') step(1)
-      if (e.key === 'ArrowLeft') step(-1)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [step])
+  const player = useVinylPlayer()
+  const { audioRef } = player
 
   return (
     <>
       <main className="flex-grow-1 d-flex align-items-center justify-content-center">
-        <ReleaseStage
-          releases={releases}
-          index={index}
-          playing={playing}
-          showInfo={showInfo}
-          onSelect={select}
-          onStep={step}
-          onSkip={() => step(1)}
-          onTogglePlay={() => setPlaying((p) => !p)}
-          onToggleInfo={() => setShowInfo((s) => !s)}
-        />
+        <ReleaseStage player={player} />
       </main>
 
       <footer className="row g-0 align-items-end gy-4">
@@ -75,33 +27,33 @@ export function VinylPage() {
         </div>
 
         <div className="col-12 col-md-4 d-flex justify-content-center align-items-center gap-4 pager">
-          <button type="button" className="text-link" onClick={() => step(-1)}>
+          <button type="button" className="text-link" onClick={() => player.step(-1)}>
             ‹ Prev
           </button>
           <span className="d-inline-flex gap-2" aria-live="polite">
             <span className="pager-num">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
-                  key={index}
+                  key={player.index}
                   className="d-inline-block"
-                  initial={{ y: 12, opacity: 0 }}
+                  initial={{ y: PAGER_SLIDE, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -12, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ y: -PAGER_SLIDE, opacity: 0 }}
+                  transition={{ duration: PAGER_DURATION }}
                 >
-                  {index + 1}
+                  {player.index + 1}
                 </motion.span>
               </AnimatePresence>
             </span>
-            / {count}
+            / {releases.length}
           </span>
-          <button type="button" className="text-link" onClick={() => step(1)}>
+          <button type="button" className="text-link" onClick={() => player.step(1)}>
             Next ›
           </button>
         </div>
       </footer>
 
-      <audio ref={audioRef} src={releases[index].preview} preload="none" onEnded={() => setPlaying(false)} />
+      <audio ref={audioRef} src={player.current.preview} preload="none" onEnded={player.handleEnded} />
     </>
   )
 }

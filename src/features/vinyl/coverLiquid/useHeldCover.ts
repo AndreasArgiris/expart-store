@@ -12,7 +12,7 @@ const SWITCH_FADE = 0.25
  */
 export function useHeldCover(
   src: string,
-  showInfo: boolean,
+  isRevealed: boolean,
   pour: MotionValue<number>,
   coverAlpha: MotionValue<number>,
   clearMask: () => void,
@@ -24,9 +24,9 @@ export function useHeldCover(
   const [heldSrc, setHeldSrc] = useState<string | null>(null)
   if (src !== prevSrc) {
     setPrevSrc(src)
-    if (!showInfo && pour.get() > 0) setHeldSrc(heldSrc ?? prevSrc)
+    if (!isRevealed && pour.get() > 0) setHeldSrc(heldSrc ?? prevSrc)
   }
-  if (showInfo && heldSrc) setHeldSrc(null)
+  if (isRevealed && heldSrc) setHeldSrc(null)
 
   // jump() also stops the slow drain, so nothing is left to finish on the next release.
   useEffect(() => {
