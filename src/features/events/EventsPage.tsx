@@ -5,6 +5,7 @@ import { Flag } from '../../shared/components/Flag'
 import { useViewport } from '../../shared/hooks/useViewport'
 import { EASE_IN_OUT } from '../../shared/motion'
 import { BREAKPOINT_LG } from '../../shared/theme'
+import { CornerMarks } from '../../shared/components/CornerMarks'
 
 const count = events.length
 const wrap = (i: number) => ((i % count) + count) % count
@@ -90,10 +91,7 @@ export function EventsPage() {
         <div className="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
           <div style={{ width: frameW }}>
             <div className="event-frame" style={{ height: frameH }}>
-              <span className="fc fc-tl" />
-              <span className="fc fc-tr" />
-              <span className="fc fc-bl" />
-              <span className="fc fc-br" />
+              <CornerMarks />
 
               <div className="event-track">
                 {events.map((e, i) => {

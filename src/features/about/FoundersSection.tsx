@@ -115,7 +115,7 @@ export function FoundersSection() {
   return (
     <section className="founders" aria-labelledby="founders-title">
       <motion.div {...revealOnScroll(0)}>
-        <Parallax distance={30}>
+        <Parallax>
           <div id="founders-title" className="sq-label">
             Founders
           </div>
@@ -141,7 +141,7 @@ export function FoundersSection() {
 
         <div className="col-12 col-lg-7 founders-info">
           <motion.div className="founders-team" {...revealOnScroll(0.15)}>
-            <Parallax distance={30}>
+            <Parallax>
               <p className="mb-0">
                 <TeamCount />
                 <span>

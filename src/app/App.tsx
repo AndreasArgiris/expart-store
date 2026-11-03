@@ -9,7 +9,7 @@ import { scrollingPages, useRoute, type Page, type Route } from '../shared/hooks
 import { AboutPage } from '../features/about/AboutPage'
 import { EventsPage } from '../features/events/EventsPage'
 import { HomePage } from '../features/home/HomePage'
-import { ProductPage } from '../features/shop/ProductPage'
+import { ProductPage } from '../features/shop/product/ProductPage'
 import { ShopPage } from '../features/shop/ShopPage'
 import { VinylPage } from '../features/vinyl/VinylPage'
 

@@ -68,7 +68,7 @@ export function GlobeSection() {
       </motion.div>
 
       <motion.div className="globe-clock" {...revealOnScroll(0.25)}>
-        <Parallax distance={30}>
+        <Parallax>
           <dl className="globe-readout">
             <div>
               <dt>Local time:</dt>
@@ -83,7 +83,7 @@ export function GlobeSection() {
       </motion.div>
 
       <motion.div className="globe-coords" {...revealOnScroll(0.3)}>
-        <Parallax distance={30}>
+        <Parallax>
           <dl className="globe-readout">
             <div>
               <dt>Lat:</dt>

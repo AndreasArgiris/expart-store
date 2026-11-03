@@ -29,7 +29,7 @@ export function ContactSection() {
 
       <div className="col-12 col-lg-6 contact-main">
         <motion.div {...revealOnScroll(0.1)}>
-          <Parallax distance={30}>
+          <Parallax>
             <div className="sq-label mb-4">Contact</div>
           </Parallax>
         </motion.div>

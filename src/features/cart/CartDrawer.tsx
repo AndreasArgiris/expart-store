@@ -5,6 +5,7 @@ import { productHref } from '../../shared/hooks/usePage'
 import { useCart } from './cartContext'
 import { PayPalCheckout } from './PayPalCheckout'
 import { EASE_OUT } from '../../shared/motion'
+import { CornerMarks } from '../../shared/components/CornerMarks'
 
 
 export function CartDrawer() {
@@ -51,10 +52,7 @@ export function CartDrawer() {
             exit={{ x: '105%' }}
             transition={{ duration: 0.45, ease: EASE_OUT }}
           >
-            <span className="fc fc-tl" />
-            <span className="fc fc-tr" />
-            <span className="fc fc-bl" />
-            <span className="fc fc-br" />
+            <CornerMarks />
 
             <header className="cart-head">
               <span className="cart-tab sq-label">

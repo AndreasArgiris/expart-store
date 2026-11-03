@@ -50,7 +50,7 @@ export function HomePage() {
 
         <footer className="row g-0 align-items-end gy-4">
           <motion.div className="col-12 col-md-6" {...rise(0.6)}>
-            <Parallax distance={30}>
+            <Parallax>
               <div className="sq-label mb-4">Dig deeper</div>
               <p className="intro mb-0">
                 Expart is an independent art lovers team and event curator, bringing unconventional sounds to unique

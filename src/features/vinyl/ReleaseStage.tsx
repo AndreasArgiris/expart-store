@@ -6,6 +6,7 @@ import { PlayerControls } from './PlayerControls'
 import { Vinyl } from './Vinyl'
 import { EASE_IN_OUT } from '../../shared/motion'
 import { BREAKPOINT_MD } from '../../shared/theme'
+import { CornerMarks } from '../../shared/components/CornerMarks'
 
 interface ReleaseStageProps {
   releases: Release[]
@@ -76,10 +77,7 @@ export function ReleaseStage(props: ReleaseStageProps) {
         </div>
 
         <div className="frame-box" style={{ height: frame }}>
-          <span className="fc fc-tl" />
-          <span className="fc fc-tr" />
-          <span className="fc fc-bl" />
-          <span className="fc fc-br" />
+          <CornerMarks />
 
           <div className="track">
             {releases.map((r, i) => {

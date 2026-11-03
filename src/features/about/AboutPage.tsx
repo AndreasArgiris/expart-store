@@ -13,7 +13,7 @@ export function AboutPage() {
     <main className="about">
       <section className="row g-0 about-intro">
         <motion.div className="col-12 col-lg-6 about-side" {...rise(0.1)}>
-          <Parallax distance={30}>
+          <Parallax>
             <div className="sq-label">About Expart</div>
           </Parallax>
           <motion.div {...rise(0.25)}>
