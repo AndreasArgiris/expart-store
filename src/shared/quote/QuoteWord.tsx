@@ -19,7 +19,7 @@ interface QuoteWordProps {
 /** One word of a quote that scrambles through red digits on each pulse, without reflowing its line. */
 export function QuoteWord({ word, pulse, x }: QuoteWordProps) {
   const ref = useRef<HTMLSpanElement>(null)
-  const { text, running, scramble } = useScramble(word, SCRAMBLE_MS, ROLL_MS)
+  const { text, isRunning, scramble } = useScramble(word, SCRAMBLE_MS, ROLL_MS)
 
   // Lock the word's width while it scrambles, so the justified lines never reflow.
   useEffect(() => {
@@ -30,13 +30,13 @@ export function QuoteWord({ word, pulse, x }: QuoteWordProps) {
   }, [pulse, scramble])
 
   useEffect(() => {
-    if (!running && ref.current) ref.current.style.width = ''
-  }, [running])
+    if (!isRunning && ref.current) ref.current.style.width = ''
+  }, [isRunning])
 
   return (
     <motion.span
       ref={ref}
-      className={`quote-word${running ? ' is-scrambling' : ''}`}
+      className={`quote-word${isRunning ? ' is-scrambling' : ''}`}
       style={x ? { x } : undefined}
       aria-hidden="true"
     >

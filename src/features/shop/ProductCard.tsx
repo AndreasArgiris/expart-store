@@ -5,6 +5,15 @@ import { productHref } from '../../shared/hooks/useRoute'
 import { ColorSwatches } from './ColorSwatches'
 import { EASE_OUT } from '../../shared/motion'
 
+// Cards rise in as they scroll into view; a fifth of a card showing is enough on the tall grid.
+const CARD_REVEAL = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+}
+const CARD_REVEAL_DURATION = 0.8
+const SWAP_FADE = { duration: 0.4 }
+const TAGLINE_UNFOLD = { duration: 0.35, ease: EASE_OUT }
 
 /**
  * Shop grid card: model shot (or product shot) that swaps to the flat product shot on hover,
@@ -12,17 +21,15 @@ import { EASE_OUT } from '../../shared/motion'
  */
 export function ProductCard({ product, delay = 0 }: { product: MerchProduct; delay?: number }) {
   const [colorId, setColorId] = useState(product.colors[0].id)
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const color = product.colors.find((c) => c.id === colorId) ?? product.colors[0]
   const href = productHref(product.slug, product.colors.length > 1 ? color.id : undefined)
 
   return (
     <motion.article
       className="product-card"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, delay, ease: EASE_OUT }}
+      {...CARD_REVEAL}
+      transition={{ duration: CARD_REVEAL_DURATION, delay, ease: EASE_OUT }}
     >
       <a href={href} className={`product-media${color.model ? ' has-model' : ''}`} aria-label={`${product.name}, ${color.name}`}>
         <AnimatePresence initial={false}>
@@ -32,7 +39,7 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={SWAP_FADE}
           >
             {color.model && <img className="product-img product-img--model" src={color.model} alt="" draggable={false} />}
             <img className="product-img product-img--flat" src={color.image} alt="" draggable={false} />
@@ -45,11 +52,11 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
         <button
           type="button"
           className="product-toggle"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-label={open ? 'Hide details' : 'Show details'}
+          onClick={() => setIsOpen((o) => !o)}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? 'Hide details' : 'Show details'}
         >
-          {open ? '−' : '+'}
+          {isOpen ? '−' : '+'}
         </button>
         <div className="min-w-0 flex-grow-1">
           <a href={href} className="product-name">
@@ -60,13 +67,13 @@ export function ProductCard({ product, delay = 0 }: { product: MerchProduct; del
             <ColorSwatches colors={product.colors} value={color.id} onChange={setColorId} size="sm" />
           )}
           <AnimatePresence initial={false}>
-            {open && (
+            {isOpen && (
               <motion.p
                 className="product-tagline"
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.35, ease: EASE_OUT }}
+                transition={TAGLINE_UNFOLD}
               >
                 {product.tagline}
               </motion.p>
