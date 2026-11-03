@@ -1,0 +1,23 @@
+1) Pure Leather Bag 
+Carry your Vinyls with style.
+colors:White,Black
+price:69$
+
+2) 100% High Quality Cotton Sweatshirt
+For cozy cold days.
+colors:White,Black
+price:30$
+
+3) 100% High Quality Lightweight Cotton T-shirt.
+Feel with  Comfortable breathable tee
+colors:White,Black
+price:20$
+
+4) Stickers pack (x5)
+Customize your staff with these waterproof stickers.
+price:2$
+
+4) Key Chain (x5)
+A holy pendant that keeps you safe.
+colors:White,Black
+price:2$

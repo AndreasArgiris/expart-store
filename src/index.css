@@ -1,0 +1,996 @@
+:root {
+  --ink: #111;
+  --line: #d4d4d4;
+  --accent: #e5361f;
+  --tab: #2b2b2b;
+  --font: 'Space Mono', ui-monospace, 'Courier New', monospace;
+
+  --bs-body-font-family: var(--font);
+  --bs-body-color: var(--ink);
+  --bs-body-font-size: 0.9375rem;
+}
+
+body {
+  overflow-x: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 28px 42px 36px;
+  overflow: hidden;
+}
+
+/* Desktop: the layout is exactly one screen tall, never scrolls. */
+@media (min-width: 992px) {
+  .page {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .page main {
+    min-height: 0;
+  }
+
+  /* Long-form pages (About) grow and scroll instead. */
+  .page.page--scroll {
+    height: auto;
+  }
+}
+
+/* ---------- Header ---------- */
+
+.logo-link {
+  display: inline-block;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.liquid-logo {
+  display: block;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.sq-link,
+.sq-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.sq-link::before,
+.sq-label::before {
+  content: '';
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: currentColor;
+  transition: background-color 0.2s;
+}
+
+.sq-link.active::before,
+.sq-link:hover::before {
+  background: var(--accent);
+}
+
+.sq-link:hover {
+  color: var(--ink);
+}
+
+/* One row, right-aligned on desktop; wraps on narrow screens. */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 44px;
+}
+
+@media (min-width: 992px) {
+  .site-nav {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    /* Keep clear of the top-right corner mark. */
+    padding-right: 48px;
+  }
+}
+
+.site-nav li {
+  white-space: nowrap;
+}
+
+.nav-link-scramble {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.nav-link-scramble:hover,
+.nav-link-scramble:focus-visible {
+  color: var(--accent);
+}
+
+/* ---------- Viewport frame marks ---------- */
+/* Not named `.mark`: Bootstrap uses that class for a yellow highlight. */
+
+.vmark,
+.tick {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.vmark {
+  width: 12px;
+  height: 12px;
+  border: 0 solid var(--ink);
+}
+
+.vmark-tl { top: 30px; left: 16px; border-top-width: 2px; border-left-width: 2px; }
+.vmark-tr { top: 30px; right: 30px; border-top-width: 2px; border-right-width: 2px; }
+.vmark-bl { bottom: 26px; left: 16px; border-bottom-width: 2px; border-left-width: 2px; }
+.vmark-br { bottom: 26px; right: 30px; border-bottom-width: 2px; border-right-width: 2px; }
+
+.tick {
+  top: 50%;
+  width: 12px;
+  height: 22px;
+  margin-top: -11px;
+}
+
+.tick::before,
+.tick::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+}
+
+.tick::before { top: 0; bottom: 0; width: 1.5px; }
+.tick::after { top: 50%; width: 12px; height: 1.5px; }
+
+.tick-l { left: 16px; }
+.tick-l::before, .tick-l::after { left: 0; }
+.tick-r { right: 30px; }
+.tick-r::before, .tick-r::after { right: 0; }
+
+/* ---------- Stage ---------- */
+
+.stage {
+  padding: 48px 0;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.frame-tab {
+  background: var(--tab);
+  color: #fff;
+  font-weight: 700;
+  padding: 9px 13px;
+}
+
+.frame-tab .sq-label {
+  color: #fff;
+  display: flex;
+}
+
+.frame-box {
+  position: relative;
+  border: 1px solid var(--line);
+}
+
+.fc {
+  position: absolute;
+  z-index: 20;
+  width: 13px;
+  height: 13px;
+  border: 0 solid var(--ink);
+}
+
+.fc-tl { top: -1px; left: -1px; border-top-width: 1.5px; border-left-width: 1.5px; }
+.fc-tr { top: -1px; right: -1px; border-top-width: 1.5px; border-right-width: 1.5px; }
+.fc-bl { bottom: -1px; left: -1px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+.fc-br { bottom: -1px; right: -1px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+.track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.disc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+/* No blend mode here: the round clip already hides the image's white corners, and blending
+   made every frame of the page slide expensive to repaint. */
+.vinyl {
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cover-liquid {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hover-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  cursor: crosshair;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 16px;
+  margin-top: 14px;
+  line-height: 1.7;
+}
+
+/* ---------- Controls & links ---------- */
+
+.ctrl {
+  display: inline-flex;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  opacity: 0.85;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.ctrl:hover { opacity: 1; }
+.ctrl.on { color: var(--accent); opacity: 1; }
+
+.text-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 1.5;
+  transition: color 0.2s;
+}
+
+a.text-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.text-link:hover { color: var(--accent); }
+
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Footer ---------- */
+
+.intro {
+  max-width: 300px;
+  text-align: justify;
+  line-height: 1.3;
+}
+
+.pager-num {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: right;
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .page { padding: 28px 24px 32px; }
+  .intro { max-width: none; }
+  .pager { order: -1; }
+}
+
+/* ---------- Layout shell ---------- */
+
+.site-header {
+  position: relative;
+  z-index: 30;
+}
+
+.page-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* Own GPU layer, so the page slide is composited instead of repainted every frame. */
+  will-change: transform, opacity;
+}
+
+
+.min-w-0 {
+  min-width: 0;
+}
+
+/* ---------- Events ---------- */
+
+.events-side {
+  padding-left: clamp(0px, 8vw, 160px);
+}
+
+.events-side.text-end {
+  padding-left: 0;
+  padding-right: clamp(0px, 8vw, 160px);
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #c4c4c4;
+  text-align: left;
+  line-height: 1.7;
+  transition: color 0.25s;
+}
+
+.event-row:hover { color: #777; }
+.event-row.active { color: var(--ink); }
+
+.flag {
+  flex: none;
+  width: 16px;
+  height: 11px;
+  transition: opacity 0.25s;
+}
+
+.event-row:not(.active) .flag { opacity: 0.35; }
+
+.event-frame {
+  position: relative;
+  border: 1px solid var(--line);
+}
+
+.event-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.event-poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.event-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+@media (max-width: 991.98px) {
+  .events-side,
+  .events-side.text-end {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* ---------- Home ---------- */
+
+.hero-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(420px, 70vw);
+  aspect-ratio: 2.1;
+}
+
+.hero-logo {
+  width: 105%;
+  height: auto;
+  user-select: none;
+}
+
+.next-up {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 26px 12px 12px;
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+.next-up:hover {
+  color: var(--ink);
+  background: #f4f4f4;
+}
+
+.next-up-thumb {
+  flex: none;
+  display: block;
+  width: 180px;
+  height: 128px;
+  object-fit: cover;
+}
+
+.next-up-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.next-up-label {
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.next-up-name,
+.next-up-date {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- About ---------- */
+
+.about {
+  flex-grow: 1;
+  padding-top: clamp(40px, 11vh, 120px);
+}
+
+.about-side {
+  padding-left: clamp(0px, 8vw, 160px);
+  margin-bottom: 32px;
+}
+
+.about-main {
+  padding-right: clamp(0px, 8vw, 160px);
+}
+
+.about-tonearm {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  margin-top: 32px;
+  user-select: none;
+}
+
+.about-quote {
+  margin: 0 0 56px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(2.4rem, 4.3vw, 4.6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-align: justify;
+  text-align-last: left;
+  text-transform: uppercase;
+}
+
+.quote-word {
+  display: inline-block;
+  white-space: nowrap;
+  /* Slow fade back to black once the word settles. */
+  transition: color 0.9s ease;
+}
+
+.quote-word.is-scrambling {
+  color: var(--accent);
+  /* Quicker, but still eased, fade into red. */
+  transition: color 0.45s ease;
+}
+
+.about-copy {
+  max-width: 590px;
+  margin-bottom: clamp(64px, 14vh, 160px);
+  text-align: justify;
+  line-height: 1.3;
+}
+
+.concepts {
+  margin: 0 -42px;
+  overflow: hidden;
+}
+
+.concepts-track {
+  display: flex;
+  width: max-content;
+}
+
+.concept {
+  flex: none;
+  height: clamp(220px, 34vh, 360px);
+  margin: 0 20px 0 0;
+  overflow: hidden;
+}
+
+.concept img {
+  display: block;
+  width: auto;
+  height: 100%;
+  user-select: none;
+  transition: transform 0.6s ease;
+}
+
+.concept:hover img {
+  transform: scale(1.04);
+}
+
+/* ---------- About: founders ---------- */
+
+.founders {
+  padding: clamp(80px, 14vh, 160px) clamp(0px, 8vw, 160px) clamp(40px, 8vh, 100px);
+}
+
+.founders-grid {
+  margin-top: 40px;
+}
+
+/* Corner guides sit just outside the photo: top-left and bottom-right. */
+.founders-frame {
+  position: relative;
+  max-width: 480px;
+  /* Photo stays aligned with the "Founders" label; the top-left guide hangs into the margin. */
+  margin: 22px 22px 22px 0;
+}
+
+.founders-frame .fc {
+  width: 22px;
+  height: 22px;
+}
+
+.founders-frame .fc-tl { top: -22px; left: -22px; }
+.founders-frame .fc-br { right: -22px; bottom: -22px; }
+
+.founders-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+.founders-info {
+  padding-left: clamp(40px, 5vw, 100px);
+}
+
+.founders-people {
+  row-gap: 40px;
+}
+
+.founders-people > div:first-child {
+  padding-right: 32px;
+}
+
+.founder-index {
+  margin-bottom: 14px;
+  color: #8a8a8a;
+}
+
+.founder-name {
+  margin: 0 0 22px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.5rem, 1.9vw, 2.2rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.founder-from {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.founder-flag {
+  width: 24px;
+  height: 16.5px;
+}
+
+.founder-facts {
+  margin: 0 0 20px;
+  line-height: 1.7;
+}
+
+.founder-facts > div {
+  display: flex;
+  gap: 0.8em;
+}
+
+.founder-facts dt {
+  font-weight: 400;
+  color: #8a8a8a;
+}
+
+.founder-facts dd {
+  margin: 0;
+}
+
+.founder-bio {
+  line-height: 1.35;
+}
+
+.founders-team {
+  padding-bottom: 28px;
+  margin-bottom: 40px;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.founders-team p {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.founders-count {
+  /* Room for two digits, so the line doesn't shift while counting. */
+  min-width: 1.15em;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+}
+
+@media (max-width: 991.98px) {
+  .founders {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .founders-grid {
+    row-gap: 48px;
+  }
+
+  .founders-info {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .about-side,
+  .about-main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .concepts {
+    margin: 0 -24px;
+  }
+}
+
+/* ---------- Home: hero + globe ---------- */
+
+/* First screen = viewport minus header (~78px), top padding (28px) and bottom padding (36px). */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 142px);
+  min-height: calc(100dvh - 142px);
+  position: relative;
+}
+
+/* Hover-reveal video (desktop only, see HeroVideoReveal). Fills the logo area and bleeds through the page's
+   side padding to the screen edges. Its top and bottom fade out, so the trail never ends in a hard line. */
+.home-hero > main {
+  position: relative;
+}
+
+.hero-reveal {
+  --reveal-fade: 140px;
+  position: absolute;
+  inset: 0 -42px;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 var(--reveal-fade), #000 calc(100% - var(--reveal-fade)), transparent);
+  mask-image: linear-gradient(transparent, #000 var(--reveal-fade), #000 calc(100% - var(--reveal-fade)), transparent);
+}
+
+/* The video plays underneath; the SVG on top is a white cover (matching the page, and the backdrop for the
+   logo's blend below) with the liquid punched out of it. */
+.hero-reveal video,
+.hero-reveal svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-reveal video {
+  object-fit: cover;
+}
+
+/* The logo always sits above the video. */
+.hero-frame {
+  z-index: 1;
+}
+
+/* With the reveal on, the logo shows the video through itself, inverted: black over the white page, light over
+   dark footage, so it never disappears. invert() makes it white, and the difference blend does the rest. */
+.hero-reveal ~ .hero-frame {
+  filter: invert(1);
+  mix-blend-mode: difference;
+}
+
+/* Desktop: the hero's bottom row spans the page padding, from the logo's left edge to the nav block's
+   right edge. The contact section ends where the nav's text ends (--nav-inset, measured in Header). */
+@media (min-width: 992px) {
+  .contact-section.row {
+    padding-right: max(0px, calc(var(--nav-inset, 42px) - 42px));
+  }
+
+  /* Lift the hero's bottom row up, clear of the bottom corner marks. */
+  .home-hero > .row {
+    padding-bottom: 40px;
+  }
+
+  /* The next-up card sits a touch lower than the intro text. */
+  .home-hero .next-up {
+    margin-bottom: -16px;
+  }
+}
+
+/* ---------- Home: contact ---------- */
+
+.contact-section {
+  padding: 140px 0 40px;
+}
+
+.contact-wave {
+  margin-bottom: clamp(48px, 9vh, 96px);
+}
+
+.waveform {
+  display: block;
+  width: 100%;
+  color: var(--ink);
+  /* Soft fade at both ends, on top of the bars tapering down. */
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.pickup-cursors {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+}
+
+/* Natural left-aligned text; words spread into a justified block on scroll (ScrollSpreadQuote). */
+.contact-title {
+  position: relative;
+  margin: 0 0 40px;
+  text-align: left;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(2rem, 3.6vw, 4rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.contact-copy {
+  max-width: 520px;
+  margin-bottom: 32px;
+  line-height: 1.35;
+  text-align: justify;
+}
+
+.contact-list {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.contact-list > div {
+  display: flex;
+  gap: 1em;
+}
+
+.contact-list dt {
+  min-width: 7.5em;
+  font-weight: 400;
+  color: #8a8a8a;
+}
+
+.contact-list dd {
+  margin: 0;
+}
+
+.copy-email {
+  position: relative;
+  display: inline-block;
+}
+
+.copy-email button {
+  cursor: copy;
+}
+
+/* Small confirmation to the right of the address: not clickable, fades away on its own. */
+.copy-email-note {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% + 14px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 991.98px) {
+  .contact-section {
+    gap: 48px;
+    min-height: 0;
+    padding: 100px 0 40px;
+  }
+}
+
+.globe-section {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 680px;
+  margin-top: 120px;
+}
+
+.globe-intro {
+  position: absolute;
+  top: 0;
+  left: clamp(0px, 8vw, 160px);
+  z-index: 2;
+  width: min(640px, 34vw);
+  pointer-events: none;
+}
+
+/* Natural left-aligned text; words are shifted into a justified block on scroll (ScrollSpreadQuote). */
+.globe-title {
+  position: relative;
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(2rem, 3.2vw, 3.8rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.globe-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  padding: 26px;
+}
+
+.globe {
+  position: relative;
+}
+
+.globe-canvas {
+  display: block;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.globe-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.globe-readout {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.globe-readout > div {
+  display: flex;
+  gap: 0.6em;
+}
+
+.globe-readout dt {
+  font-weight: 400;
+  color: #8a8a8a;
+}
+
+.globe-readout dd {
+  margin: 0;
+}
+
+.globe-clock {
+  position: absolute;
+  top: 0;
+  right: clamp(0px, 10vw, 200px);
+}
+
+.globe-coords {
+  position: absolute;
+  bottom: 64px;
+  left: clamp(0px, 8vw, 160px);
+  font-variant-numeric: tabular-nums;
+}
+
+.globe-copy {
+  position: absolute;
+  right: clamp(0px, 8vw, 160px);
+  bottom: 0;
+  width: min(580px, 31vw);
+  margin: 0;
+  font-size: clamp(1rem, 1.25vw, 1.3rem);
+  line-height: 1.35;
+  text-align: justify;
+}
+
+@media (max-width: 991.98px) {
+  .globe-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: auto;
+    min-height: 0;
+    margin-top: 80px;
+  }
+
+  .globe-intro,
+  .globe-stage,
+  .globe-clock,
+  .globe-coords,
+  .globe-copy {
+    position: static;
+    width: auto;
+    translate: none;
+  }
+
+  .globe-stage {
+    align-self: center;
+    padding: 16px;
+  }
+}
