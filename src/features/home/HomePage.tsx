@@ -7,6 +7,8 @@ import { formatEventDate, nextEvent } from '../events/events'
 import { pageHref } from '../../shared/hooks/useRoute'
 import { EASE_OUT, rise } from '../../shared/motion'
 
+const FOOTER_RISE_DELAY = 0.6 // s
+
 // Each frame corner slides in from its own diagonal.
 const corners = [
   { className: 'fc fc-tl', from: { x: -14, y: -14 } },
@@ -48,7 +50,7 @@ export function HomePage() {
         </main>
 
         <footer className="row g-0 align-items-end gy-4">
-          <motion.div className="col-12 col-md-6" {...rise(0.6)}>
+          <motion.div className="col-12 col-lg-6" {...rise(FOOTER_RISE_DELAY)}>
             <Parallax>
               <div className="sq-label mb-4">Dig deeper</div>
               <p className="intro mb-0">
@@ -59,7 +61,7 @@ export function HomePage() {
           </motion.div>
 
           {/* Next-up card stays static: no entrance or scroll animation. */}
-          <div className="col-12 col-md-6 d-flex justify-content-md-end">
+          <div className="col-12 col-lg-6 d-flex justify-content-lg-end">
             <a href={pageHref.events} className="next-up">
               <img src={next.image} alt="" className="next-up-thumb" width={180} height={128} />
               <div className="next-up-info">

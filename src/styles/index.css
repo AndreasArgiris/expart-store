@@ -93,20 +93,12 @@ button {
   color: var(--ink);
 }
 
-/* One row, right-aligned on desktop; wraps on narrow screens. */
+/* Desktop only (mobile uses the burger menu): one row, right-aligned, clear of the top-right corner mark. */
 .site-nav {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 4px 44px;
-}
-
-@media (min-width: 992px) {
-  .site-nav {
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    /* Keep clear of the top-right corner mark. */
-    padding-right: 48px;
-  }
+  padding-right: 48px;
 }
 
 .site-nav li {
@@ -121,6 +113,108 @@ button {
 .nav-link-scramble:hover,
 .nav-link-scramble:focus-visible {
   color: var(--accent);
+}
+
+/* ---------- Mobile menu ---------- */
+
+.menu-toggle {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  /* Keep clear of the top-right corner mark. */
+  margin-right: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  color: var(--accent);
+}
+
+/* The middle bar is the element; the outer two are its pseudo-elements. */
+.menu-toggle-bars,
+.menu-toggle-bars::before,
+.menu-toggle-bars::after {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: currentColor;
+  transition:
+    transform 0.25s,
+    background-color 0.15s;
+}
+
+.menu-toggle-bars {
+  position: relative;
+}
+
+.menu-toggle-bars::before,
+.menu-toggle-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.menu-toggle-bars::before {
+  transform: translateY(-8px);
+}
+
+.menu-toggle-bars::after {
+  transform: translateY(8px);
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle-bars {
+  background: transparent;
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle-bars::before {
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle-bars::after {
+  background: currentColor;
+  transform: rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 110px 42px 36px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.mobile-menu-list li {
+  border-bottom: 1.5px solid var(--line);
+}
+
+.mobile-menu-list li:first-child {
+  border-top: 1.5px solid var(--line);
+}
+
+.mobile-menu .sq-link {
+  width: 100%;
+  gap: 16px;
+  padding: 14px 0;
+  font-size: clamp(1.5rem, 7vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.mobile-menu .sq-link::before {
+  width: 14px;
+  height: 14px;
 }
 
 /* ---------- Viewport frame marks ---------- */
@@ -202,6 +296,13 @@ button {
 .tick-r::before,
 .tick-r::after {
   right: 0;
+}
+
+/* Mid-screen ticks would sit on top of the stacked mobile layout. */
+@media (max-width: 991.98px) {
+  .tick {
+    display: none;
+  }
 }
 
 /* ---------- Stage ---------- */
@@ -374,6 +475,9 @@ a.text-link {
   .page {
     padding: 28px 24px 32px;
   }
+  .mobile-menu {
+    padding: 110px 24px 32px;
+  }
   .intro {
     max-width: none;
   }
@@ -387,6 +491,16 @@ a.text-link {
 .site-header {
   position: relative;
   z-index: 30;
+}
+
+/* The open menu covers everything except the cart drawer, including the shop's floating cart tab. */
+.site-header:has(.mobile-menu) {
+  z-index: 70;
+}
+
+.site-header .logo-link {
+  position: relative;
+  z-index: 1;
 }
 
 .page-body {
@@ -542,6 +656,31 @@ a.text-link {
 .next-up-date {
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+/* Small screens: a compact card, keeping the thumbnail's proportions. */
+@media (max-width: 991.98px) {
+  .next-up {
+    max-width: 100%;
+    gap: 12px;
+    padding: 8px 14px 8px 8px;
+  }
+
+  .next-up-thumb {
+    width: 104px;
+    height: 74px;
+  }
+
+  .next-up-info {
+    min-width: 0;
+    gap: 0;
+    font-size: 0.8125rem;
+    white-space: normal;
+  }
+
+  .next-up-label {
+    margin-bottom: 2px;
+  }
 }
 
 /* ---------- About ---------- */
@@ -949,6 +1088,11 @@ a.text-link {
     gap: 48px;
     min-height: 0;
     padding: 100px 0 40px;
+  }
+
+  .pickup-cursors {
+    width: min(100%, 220px);
+    margin-inline: auto;
   }
 }
 

@@ -49,6 +49,7 @@ export function CartDrawer() {
         <motion.div
           key="cart"
           className="cart-layer"
+          data-lenis-prevent
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

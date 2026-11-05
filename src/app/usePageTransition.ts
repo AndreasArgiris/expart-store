@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import type { Variants } from 'motion/react'
 import type { Page, Route } from '../shared/hooks/useRoute'
+import { jumpToTop } from '../shared/smoothScroll'
 
 // Menu order decides slide direction: moving "forward" brings content in from the right.
 const ORDER: Page[] = ['home', 'events', 'shop', 'product', 'vinyl', 'about']
 const SLIDE = 35 // vw
-const ENTER_EASE = [0.16, 1, 0.3, 1] as const
-const EXIT_EASE = [0.4, 0, 0.9, 0.5] as const
+// Cubic-bezier control points of the two curves below.
+const ENTER_X1 = 0.16
+const ENTER_X2 = 0.3
+const EXIT_X1 = 0.4
+const EXIT_X2 = 0.9
+const EXIT_Y2 = 0.5
+const ENTER_EASE = [ENTER_X1, 1, ENTER_X2, 1] as const
+const EXIT_EASE = [EXIT_X1, 0, EXIT_X2, EXIT_Y2] as const
 const ENTER_SLIDE = 0.55 // s
 const ENTER_FADE = 0.35 // s
 const EXIT = 0.28 // s
@@ -44,7 +51,7 @@ export function usePageTransition(route: Route) {
 
   const [layoutPage, setLayoutPage] = useState(page)
   const handleExitComplete = () => {
-    window.scrollTo(0, 0)
+    jumpToTop()
     setLayoutPage(page)
   }
 

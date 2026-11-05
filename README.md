@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="public/media/logo.svg" alt="Expart" height="72" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<h1 align="center">Expart</h1>
 
-Currently, two official plugins are available:
+<p align="center"><strong>Digging deeper through vinyl, sound & human connection.</strong></p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+Most music is made to sit in the background. A playlist nobody chose, a night that feels like every other night, a record bought because an algorithm suggested it.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Expart goes the other way.** It is an independent art lovers team and event curator, bringing unconventional sounds to unique places around the world. This site is its home: pop-up events, the record shelf, the merch and the story behind it all, in one place. Every record and every night is chosen to start a conversation, with your friends or with a stranger.
 
-## Expanding the Oxlint configuration
+## Why Expart
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **Curated, not generated.** Every release and every line-up is picked by hand.
+- **A surprise every time.** Each event's line-up stays secret until the doors open.
+- **Unexpected places.** Pop-up nights in cities and venues you wouldn't expect.
+- **Made to be explored.** A site that moves and responds like the records and rooms it's about, on desktop and on your phone.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Run it locally
+
+You need [Node.js](https://nodejs.org/) 22.22.2+, 24.15+ or 26+.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Built with
+
+React 19, TypeScript, Vite, Bootstrap, TanStack Query, Motion, Lenis, d3-geo and the PayPal JavaScript SDK. Tested with Vitest and React Testing Library.

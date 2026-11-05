@@ -23,6 +23,7 @@ vi.stubGlobal('matchMedia', (query: string) => ({
   removeListener: () => {},
   dispatchEvent: () => false,
 }))
+Object.defineProperty(document, 'fonts', { value: { ready: Promise.resolve() } })
 
 afterEach(() => {
   cleanup()

@@ -1,56 +1,11 @@
-import { useLayoutEffect, useRef, type RefObject } from 'react'
-import { useCart } from '../features/cart/cartContext'
-import { events } from '../features/events/events'
-import { releases } from '../features/vinyl/releases'
+import { useId, useLayoutEffect, useRef, type RefObject } from 'react'
 import { pageHref, type Page } from '../shared/hooks/useRoute'
-import { useScramble } from '../shared/hooks/useScramble'
 import { LiquidLogo } from './LiquidLogo'
-
-type NavPage = Exclude<Page, 'product'>
-
-interface NavItem {
-  label: string
-  count?: number
-  page?: NavPage
-  /** Opens the cart drawer instead of navigating. */
-  isCart?: boolean
-}
-
-const NAV: NavItem[] = [
-  { label: 'Events', count: events.length, page: 'events' },
-  { label: 'Shop', page: 'shop' },
-  { label: 'Vinyls', count: releases.length, page: 'vinyl' },
-  { label: 'About', page: 'about' },
-  { label: 'Cart', isCart: true },
-]
-
-function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
-  const { count: cartCount, open: openCart } = useCart()
-  const count = item.isCart ? cartCount : item.count
-  const label = count !== undefined ? `${item.label} [${count}]` : item.label
-  const { text, scramble } = useScramble(label)
-
-  return (
-    <a
-      href={item.page ? pageHref[item.page] : '#'}
-      className={`sq-link nav-link-scramble fw-bold${isActive ? ' active' : ''}`}
-      aria-current={isActive ? 'page' : undefined}
-      aria-label={label}
-      onPointerEnter={scramble}
-      onFocus={scramble}
-      onClick={
-        item.isCart
-          ? (e) => {
-              e.preventDefault()
-              openCart()
-            }
-          : undefined
-      }
-    >
-      <span aria-hidden="true">{text}</span>
-    </a>
-  )
-}
+import { MenuToggle } from './MenuToggle'
+import { MobileMenu } from './MobileMenu'
+import { isNavItemActive, NAV_ITEMS } from './navItems'
+import { NavLink } from './NavLink'
+import { useMobileMenu } from './useMobileMenu'
 
 /**
  * Publishes the gap between the viewport's right edge and the end of the widest nav label as
@@ -74,28 +29,33 @@ function useNavInset(navRef: RefObject<HTMLElement | null>) {
   }, [navRef])
 }
 
-/** Logo (home link) and the main nav; nav labels scramble on hover, and Cart opens the drawer. */
+/** Logo (home link) and the main nav: a row of links on desktop, a burger and full-screen menu on mobile. */
 export function Header({ page }: { page: Page }) {
   const navRef = useRef<HTMLElement>(null)
   useNavInset(navRef)
+  const menu = useMobileMenu(page)
+  const menuId = useId()
 
   return (
-    <header className="row g-0 align-items-start site-header">
-      <div className="col-12 col-lg-6 mb-4 mb-lg-0">
-        <a href={pageHref.home} className="logo-link" aria-label="Expart, home">
+    <header className="row g-0 align-items-center align-items-lg-start site-header" onBlur={menu.handleHeaderBlur}>
+      <div className="col col-lg-6">
+        <a href={pageHref.home} className="logo-link" aria-label="Expart, home" onClick={menu.close}>
           <LiquidLogo width={125} />
         </a>
       </div>
 
-      <nav ref={navRef} className="col-12 col-lg-6" aria-label="Main">
+      <nav ref={navRef} className="col-lg-6 d-none d-lg-block" aria-label="Main">
         <ul className="site-nav list-unstyled mb-0">
-          {NAV.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <li key={item.label}>
-              <NavLink item={item} isActive={item.page === page || (item.page === 'shop' && page === 'product')} />
+              <NavLink item={item} isActive={isNavItemActive(item, page)} />
             </li>
           ))}
         </ul>
       </nav>
+
+      <MenuToggle isOpen={menu.isOpen} menuId={menuId} onToggle={menu.handleToggle} />
+      <MobileMenu id={menuId} isOpen={menu.isOpen} page={page} onNavigate={menu.close} />
     </header>
   )
 }

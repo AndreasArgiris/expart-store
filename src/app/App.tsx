@@ -7,6 +7,7 @@ import { FrameMarks } from './FrameMarks'
 import { Header } from './Header'
 import { pageSlide, usePageTransition } from './usePageTransition'
 import { scrollingPages, useRoute, type Page, type Route } from '../shared/hooks/useRoute'
+import { useSmoothScroll } from '../shared/smoothScroll'
 import { AboutPage } from '../features/about/AboutPage'
 import { EventsPage } from '../features/events/EventsPage'
 import { HomePage } from '../features/home/HomePage'
@@ -30,6 +31,7 @@ function renderPage(route: Route) {
 
 /** The site shell: frame marks, header, the sliding page area, and the cart (button on shop pages, drawer). */
 function App() {
+  useSmoothScroll()
   const route = useRoute()
   const { page } = route
   const { key, direction, layoutPage, handleExitComplete } = usePageTransition(route)

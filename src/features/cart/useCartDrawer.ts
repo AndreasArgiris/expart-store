@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useOverlayDismiss } from '../../shared/hooks/useOverlayDismiss'
 import { useCart } from './cartContext'
 
 /**
@@ -10,19 +11,7 @@ export function useCartDrawer() {
   const { isOpen, close, clear } = cart
   const [paidOrderId, setPaidOrderId] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (!isOpen) return
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close()
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    const { overflow } = document.body.style
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = overflow
-    }
-  }, [isOpen, close])
+  useOverlayDismiss(isOpen, close)
 
   const handleClose = () => {
     close()

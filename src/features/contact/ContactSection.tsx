@@ -11,6 +11,10 @@ const EMAIL = 'expart.corp@gmail.com'
 // The title's spread finishes opening this far (px) above the bottom of the screen, or at least this share down.
 const SPREAD_END_FROM_BOTTOM = 300
 const SPREAD_END_MIN_SHARE = 0.35
+// Reveal delays (s): the contact text comes in block by block.
+const LABEL_DELAY = 0.1
+const TITLE_DELAY = 0.2
+const COPY_DELAY = 0.3
 
 /** Closing contact block: waveform, tonearm art, the spread title and a copy-to-clipboard email. */
 export function ContactSection() {
@@ -25,19 +29,19 @@ export function ContactSection() {
         <Waveform className="waveform" />
       </motion.div>
 
-      <motion.div className="col-12 col-lg-6 contact-art" {...revealOnScroll(0)}>
+      <motion.div className="col-12 col-lg-6 order-last order-lg-0 contact-art" {...revealOnScroll(0)}>
         <Parallax distance={50}>
           <PickupCursors className="pickup-cursors" />
         </Parallax>
       </motion.div>
 
       <div className="col-12 col-lg-6 contact-main">
-        <motion.div {...revealOnScroll(0.1)}>
+        <motion.div {...revealOnScroll(LABEL_DELAY)}>
           <Parallax>
             <div className="sq-label mb-4">Contact</div>
           </Parallax>
         </motion.div>
-        <motion.div {...revealOnScroll(0.2)}>
+        <motion.div {...revealOnScroll(TITLE_DELAY)}>
           <Parallax distance={45}>
             <div id="contact-title">
               <ScrollSpreadQuote
@@ -49,7 +53,7 @@ export function ContactSection() {
             </div>
           </Parallax>
         </motion.div>
-        <motion.div {...revealOnScroll(0.3)}>
+        <motion.div {...revealOnScroll(COPY_DELAY)}>
           <Parallax distance={60}>
             <p className="contact-copy">
               Bookings, collaborations, a venue you think we should play, or a record you can't find. Write to us and
