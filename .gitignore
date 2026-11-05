@@ -27,6 +27,3 @@ dist-ssr
 .env
 .env.*
 !.env.example
-
-# Claude Code project instructions
-CLAUDE.md
